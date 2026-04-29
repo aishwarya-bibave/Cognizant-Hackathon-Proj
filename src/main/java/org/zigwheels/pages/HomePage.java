@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+
 public class HomePage{
     WebDriver driver;
     JavascriptExecutor js;
@@ -49,6 +50,13 @@ public class HomePage{
 
     @FindBy(xpath="//span[text()='Search']")
     WebElement searchBtn;
+
+    @FindBy(xpath = "//span[contains(text(),'Sort by')]")
+    WebElement sortByOption;
+
+    @FindBy(xpath = "//span[text()='Top reviewed']")
+    WebElement topReviewOption;
+
 
     public void closePop(){
         try{
@@ -181,8 +189,4 @@ public class HomePage{
             js.executeScript("arguments[0].click()", searchBtn);
         }
     }
-
-
-
-
 }
