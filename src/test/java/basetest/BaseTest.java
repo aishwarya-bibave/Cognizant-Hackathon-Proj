@@ -7,6 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import utilities.Utility;
+import utilities.WaitUtils;
+
+import java.io.IOException;
 import java.time.Duration;
 
 public class BaseTest {
@@ -28,13 +31,18 @@ public class BaseTest {
         }
         driver.get(Utility.fetchPropertyValue("baseUrl").toString());
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.parseLong(Utility.fetchPropertyValue("implicitWaitSeconds").toString())));
+        try{
+            new WaitUtils(driver);
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-//    @AfterMethod
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterMethod
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }
 
