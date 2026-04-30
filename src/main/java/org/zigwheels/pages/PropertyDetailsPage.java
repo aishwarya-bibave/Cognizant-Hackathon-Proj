@@ -2,6 +2,8 @@ package org.zigwheels.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,8 +14,10 @@ public class PropertyDetailsPage {
     WebDriver driver;
     WebDriverWait wait;
 
-    By location = By.xpath("(//*[contains(text(),'Nairobi') and contains(text(),'Kenya')])[3]");
-    By languagesSection = By.xpath("//*[contains(text(),'Languages spoken')]/following::div[1]");
+    By location = (By.xpath("//*[contains(text(),'Nairobi') and contains(text(),'Kenya')])[3]"));
+
+    @FindBy(xpath="//*[contains(text(),'Languages spoken')]/following::div[1]")
+    WebElement languagesSection;
 
 
     public PropertyDetailsPage(WebDriver driver) {
@@ -32,7 +36,7 @@ public class PropertyDetailsPage {
 
     public String getLanguages() {
         try {
-            return driver.findElement(languagesSection).getText();
+            return languagesSection.getText();
         } catch (Exception e) {
             return "Languages not found";
         }

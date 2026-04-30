@@ -1,8 +1,10 @@
 package org.booking.testcases;
 
 import basetest.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.zigwheels.pages.HomePage;
+import org.zigwheels.pages.HotelSearchPage;
 import org.zigwheels.pages.BookingDetails;
 import org.zigwheels.pages.PropertyDetailsPage;
 
@@ -24,6 +26,8 @@ public class TC_03 extends BaseTest {
         hp.endDate("30", "June", "2026");
         hp.enterNumberOfAdults(4);
         hp.search();
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.clickOnSortBy();
         PropertyDetailsPage prop = new PropertyDetailsPage(driver);
 
         BookingDetails resultsPage = new BookingDetails(driver);
@@ -31,7 +35,7 @@ public class TC_03 extends BaseTest {
         List<String> properties = resultsPage.getTopFivePropertyDetails();
         List<String> links = resultsPage.getTopFivePropertyLinks();
 
-
+        Assert.assertEquals(properties.size(), 5, "Top 5 hotel details not fetched");
 
         for (int i = 0; i < links.size(); i++) {
 
