@@ -10,7 +10,7 @@ import utilities.WaitUtils;
 public class TC_02 extends BaseTest {
 
         @Test
-        public void verifySortByTopReview(){
+        public void verifySortByTopReview() throws InterruptedException {
             HomePage hp = new HomePage(driver);
             hp.closePop();
             hp.searchCity("Nairobi");
@@ -18,8 +18,11 @@ public class TC_02 extends BaseTest {
             hp.endDate("30", "June", "2026");
             hp.enterNumberOfAdults(4);
             hp.search();
-            HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-            hotelSearchPage.clickOnSortByDropDown();
-            hotelSearchPage.clickOnTopReviewsOption();
+            HotelSearchPage hsp = new HotelSearchPage(driver);
+            hsp.clickVacationHomesOption();
+            hsp.clickHotelsOption();
+            hsp.clickWonderfulOption();
+            hsp.inputElevatorInSmartFilters();
+            Thread.sleep(5000);
         }
 }
