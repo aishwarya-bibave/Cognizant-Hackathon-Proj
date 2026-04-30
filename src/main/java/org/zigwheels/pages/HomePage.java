@@ -1,13 +1,16 @@
 package org.zigwheels.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.WaitUtils;
 
-
-public class HomePage{
+public class HomePage {
     WebDriver driver;
     JavascriptExecutor js;
+    private static final Logger log = LogManager.getLogger(HomePage.class);
 
     public HomePage(WebDriver driver){
         this.driver = driver;
@@ -51,68 +54,83 @@ public class HomePage{
     @FindBy(xpath="//span[text()='Search']")
     WebElement searchBtn;
 
-    @FindBy(xpath = "//span[contains(text(),'Sort by')]")
-    WebElement sortByOption;
-
-    @FindBy(xpath = "//span[text()='Top reviewed']")
-    WebElement topReviewOption;
-
-
     public void closePop(){
         try{
-            closePopupBtn.click();
-        }catch(ElementClickInterceptedException e){
-            js.executeScript("arguments[0].click()", closePopupBtn);
+            WaitUtils.waitForElementToBeClickable(closePopupBtn);
+            try{
+                closePopupBtn.click();
+            }catch(ElementClickInterceptedException e1){
+                js.executeScript("arguments[0].click()", closePopupBtn);
+                log.warn("Click intercepted, used JavaScript click for closePopupBtn");
+            }
+        }catch(Exception e2){
+            log.error("Failed to close popup: " + e2.getMessage(), e2);
         }
     }
 
     public void searchCity(String enterCity){
-        searchCity.sendKeys(enterCity);
-        searchCity.sendKeys(Keys.TAB);
+        try{
+            WaitUtils.waitForElementToBeVisible(searchCity).sendKeys(enterCity);
+            searchCity.sendKeys(Keys.TAB);
+        }catch(Exception e){
+            log.error("Failed to enter city: " + e.getMessage(), e);
+        }
     }
 
     public void startDate(String startDay, String startMonth, String startYear){
         try{
-            clickDateElement.click();
-        }catch(ElementClickInterceptedException e){
-            js.executeScript("arguments[0].click()", clickDateElement);
+            WaitUtils.waitForElementToBeClickable(clickDateElement);
+            try{
+                clickDateElement.click();
+            }catch(ElementClickInterceptedException e1){
+                js.executeScript("arguments[0].click()", clickDateElement);
+                log.warn("Click intercepted, used JavaScript click for clickDateElement");
+            }
+        }catch(Exception e2){
+            log.error("Failed to open date picker: " + e2.getMessage(), e2);
         }
-        String[] currentMonthYear = currentMonthAndYear.getText().split(" ");
-        String currentMonth = "";
-        String currentYear = "";
         try{
-            currentMonth = currentMonthYear[0];
-            currentYear = currentMonthYear[1];
-        }catch(IndexOutOfBoundsException e){
-            System.out.println(e.getMessage());
-            return;
-        }
-        String currentDayStr = currentDay.getText();
-        int currentDayInt = Integer.parseInt(currentDayStr);
-        int startDayInt = Integer.parseInt(startDay);
-        while(!currentYear.equals(startYear)){
+            String[] currentMonthYear = WaitUtils.waitForElementToBeVisible(currentMonthAndYear).getText().split(" ");
+            String currentMonth = "";
+            String currentYear = "";
             try{
-                nextMonthBtn.click();
-            }catch(ElementClickInterceptedException e){
-                js.executeScript("arguments[0].click()", nextMonthBtn);
+                currentMonth = currentMonthYear[0];
+                currentYear = currentMonthYear[1];
+            }catch(IndexOutOfBoundsException e){
+                log.error("Month/Year parsing failed: " + e.getMessage(), e);
+                return;
             }
-            currentMonthYear = currentMonthAndYear.getText().split(" ");
-            currentMonth = currentMonthYear[0];
-            currentYear = currentMonthYear[1];
-        }
-        while(!currentMonth.equals(startMonth)){
-            try{
-                nextMonthBtn.click();
-            }catch(ElementClickInterceptedException e){
-                js.executeScript("arguments[0].click()", nextMonthBtn);
+            String currentDayStr = currentDay.getText();
+            int currentDayInt = Integer.parseInt(currentDayStr);
+            int startDayInt = Integer.parseInt(startDay);
+            while(!currentYear.equals(startYear)){
+                try{
+                    nextMonthBtn.click();
+                }catch(ElementClickInterceptedException e){
+                    js.executeScript("arguments[0].click()", nextMonthBtn);
+                    log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
+                }
+                currentMonthYear = currentMonthAndYear.getText().split(" ");
+                currentMonth = currentMonthYear[0];
+                currentYear = currentMonthYear[1];
             }
-            currentMonthYear = currentMonthAndYear.getText().split(" ");
-            currentMonth = currentMonthYear[0];
-        }
-        if(startDayInt >= currentDayInt){
-            driver.findElement(By.xpath("(//span[text()='"+startDay+"'])[1]")).click();
-        } else {
-            System.out.println("Expected day is before current day, cannot select.");
+            while(!currentMonth.equals(startMonth)){
+                try{
+                    nextMonthBtn.click();
+                }catch(ElementClickInterceptedException e){
+                    js.executeScript("arguments[0].click()", nextMonthBtn);
+                    log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
+                }
+                currentMonthYear = currentMonthAndYear.getText().split(" ");
+                currentMonth = currentMonthYear[0];
+            }
+            if(startDayInt >= currentDayInt){
+                driver.findElement(By.xpath("(//span[text()='"+startDay+"'])[1]")).click();
+            } else {
+                log.warn("Expected day is before current day, cannot select.");
+            }
+        }catch(Exception e){
+            log.error("Failed to select start date: " + e.getMessage(), e);
         }
     }
 
@@ -124,7 +142,7 @@ public class HomePage{
             currentMonth = currentMonthYear[0];
             currentYear = currentMonthYear[1];
         }catch(IndexOutOfBoundsException e){
-            System.out.println(e.getMessage());
+            log.error("Month/Year parsing failed: " + e.getMessage(), e);
             return;
         }
         while(!currentYear.equals(endYear)){
@@ -132,6 +150,7 @@ public class HomePage{
                 nextMonthBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", nextMonthBtn);
+                log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
             }
             currentMonthYear = currentMonthAndYear.getText().split(" ");
             currentMonth = currentMonthYear[0];
@@ -142,6 +161,7 @@ public class HomePage{
                 nextMonthBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", nextMonthBtn);
+                log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
             }
             currentMonthYear = currentMonthAndYear.getText().split(" ");
             currentMonth = currentMonthYear[0];
@@ -153,9 +173,15 @@ public class HomePage{
 
     public void enterNumberOfAdults(int targetAdults){
         try{
-            guestSelector.click();
-        }catch(ElementClickInterceptedException e){
-            js.executeScript("arguments[0].click()", guestSelector);
+            WaitUtils.waitForElementToBeClickable(guestSelector);
+            try{
+                guestSelector.click();
+            }catch(ElementClickInterceptedException e2){
+                js.executeScript("arguments[0].click()", guestSelector);
+                log.warn("Click intercepted, used JavaScript click for guestSelector");
+            }
+        }catch(Exception e1){
+            log.error("Failed to open guest selector: " + e1.getMessage(), e1);
         }
         int currentAdultsSelected = Integer.parseInt(checkAdultCount.getText());
         while(currentAdultsSelected < targetAdults){
@@ -163,6 +189,7 @@ public class HomePage{
                 adultPlusBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", adultPlusBtn);
+                log.warn("Click intercepted, used JavaScript click for adultPlusBtn");
             }
             currentAdultsSelected = Integer.parseInt(checkAdultCount.getText());
         }
@@ -171,6 +198,7 @@ public class HomePage{
                 adultMinusBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", adultMinusBtn);
+                log.warn("Click intercepted, used JavaScript click for adultMinusBtn");
             }
             currentAdultsSelected = Integer.parseInt(checkAdultCount.getText());
         }
@@ -178,15 +206,21 @@ public class HomePage{
             applyBtn.click();
         }catch(ElementClickInterceptedException e){
             js.executeScript("arguments[0].click()", applyBtn);
+            log.warn("Click intercepted, used JavaScript click for applyBtn");
         }
-
     }
 
     public void search(){
         try{
-            searchBtn.click();
-        }catch(ElementClickInterceptedException e){
-            js.executeScript("arguments[0].click()", searchBtn);
+            WaitUtils.waitForElementToBeClickable(searchBtn);
+            try{
+                searchBtn.click();
+            }catch(ElementClickInterceptedException e1){
+                js.executeScript("arguments[0].click()", searchBtn);
+                log.warn("Click intercepted, used JavaScript click for searchBtn");
+            }
+        }catch(Exception e2){
+            log.error("Failed to click search button: " + e2.getMessage(), e2);
         }
     }
 }
