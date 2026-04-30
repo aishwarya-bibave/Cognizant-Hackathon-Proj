@@ -21,6 +21,8 @@ public class BaseTest {
         if(Utility.fetchPropertyValue("browser").equals("chrome")) {
             driver = new ChromeDriver();
             driver.manage().window().maximize();
+//            options = webdriver.ChromeOptions();
+//            options.add_argument("--headless=new");
         }else if(Utility.fetchPropertyValue("browser").equals("firefox")){
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
