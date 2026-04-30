@@ -14,10 +14,6 @@ public class BookingDetails {
     WebDriver driver;
     WebDriverWait wait;
 
-    By firstFiveCards = By.xpath("(//div[@data-testid='property-card'])[position()<=5]");
-    By title = By.xpath(".//div[@data-testid='title']");
-    By price = By.xpath(".//span[@data-testid='price-and-discounted-price']");
-    By rating = By.xpath(".//div[@data-testid='review-score']");
 
     public BookingDetails(WebDriver driver) {
         this.driver = driver;
@@ -25,7 +21,7 @@ public class BookingDetails {
     }
 
     public List<WebElement> getTopFiveCards() {
-        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(firstFiveCards));
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("(//div[@data-testid='property-card'])[position()<=5]")));
     }
 
     public List<String> getTopFivePropertyDetails() {
@@ -34,16 +30,17 @@ public class BookingDetails {
 
         for (WebElement card : cards) {
 
-            String name = card.findElement(title).getText();
+            String name = card.findElement(By.xpath(".//div[@data-testid='title']")).getText();
 
             String priceText = "";
             try {
-                priceText = card.findElement(price).getText();
+                priceText = card.findElement(By.xpath(".//span[@data-testid='price-and-discounted-price']")).getText();
             } catch (Exception ignored) {}
 
             String ratingText = "";
             try {
-                ratingText = card.findElement(rating).getText();
+                ratingText = card.findElement(By.xpath(".//div[@data-testid='review-score']")).getText();
+                ratingText = ratingText.split("\n")[1];
             } catch (Exception ignored) {}
 
             result.add("Name: " + name + " | Price: " + priceText + " | Rating: " + ratingText);
