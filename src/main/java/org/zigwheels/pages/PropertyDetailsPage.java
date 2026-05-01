@@ -41,6 +41,9 @@ public class PropertyDetailsPage {
     @FindBy(xpath="//td[@class='totalPrice-container']")
     WebElement containerOfTotalPrice;
 
+    @FindBy(xpath="(//div[@class='bui-price-display__label '])[1]")
+    WebElement tripDurationAndMembers;
+
     public void extractHolidayHomeDetails(){
         for(int index=0; index<holidayHomes.subList(0, 5).size(); index++){
             WebElement holidayHome = holidayHomes.get(index);
@@ -74,18 +77,37 @@ public class PropertyDetailsPage {
             try {
                 WaitUtils.waitForElementToBePresent("//div[@data-capla-component-boundary='b-property-web-property-page/PropertyHeaderName']//h2");
                 WaitUtils.waitForElementToBeVisible(holidayHomeTitle);
-                log.info(holidayHomeTitle.getText());
+                log.info("Holiday Home Title: " + holidayHomeTitle.getText());
             } catch (Exception e) {
                 log.error("Holiday Home Title not visible: " + e.getMessage(), e);
             }
-            log.info(holidayHomeLocation.getText());
+            log.info("Holiday Home Location: " + holidayHomeLocation.getText());
             js.executeScript("arguments[0].scrollIntoView();", containerOfTotalPrice);
             try{
                 WaitUtils.waitForElementToBeVisible(containerOfTotalPrice);
             }catch(Exception e2){
                 log.error("Failed because element is not visible: " + e2.getMessage(), e2);
             }
-            log.info(holidayHomePrice.getText());
+            String totalPriceForAllNightsIncluded = holidayHomePrice.getText();
+            log.info("Holiday Home Total Price (All Nights Included): " + totalPriceForAllNightsIncluded);
+            int totalPrice = Integer.parseInt(totalPriceForAllNightsIncluded.replaceAll("[^0-9]", ""));
+            String durationText = tripDurationAndMembers.getText().split(",")[0].trim();
+            int nights = 0;
+            if (durationText.toLowerCase().contains("week")) {
+                String weeksStr = durationText.replaceAll("[^0-9]", "");
+                int weeks = Integer.parseInt(weeksStr);
+                nights = weeks * 7;
+            } else if (durationText.toLowerCase().contains("night")) {
+                String nightsStr = durationText.replaceAll("[^0-9]", "");
+                nights = Integer.parseInt(nightsStr);
+            } else if (durationText.toLowerCase().contains("day")) {
+                String daysStr = durationText.replaceAll("[^0-9]", "");
+                int days = Integer.parseInt(daysStr);
+                nights = days - 1;
+            }
+            double perNight = (double) totalPrice / nights;
+            log.info("Duration: " + nights + " nights");
+            log.info("Per Night: ₹" + perNight);
             driver.close();
             driver.switchTo().window(mainWindow);
         }
