@@ -225,4 +225,24 @@ public class HomePage {
             log.error("Failed to click search button: " + e2.getMessage(), e2);
         }
     }
+
+    public boolean isCityEnteredCorrectly(String nairobi) {
+        try {
+            String actualCity = searchCity.getAttribute("value");
+            return actualCity.equalsIgnoreCase(nairobi);
+        }
+        catch (Exception e) {
+            log.error("Failed to verify entered city: " + e.getMessage(), e);
+            return false;
+        }
+    }
+
+    public boolean isSearchResultsDisplayed() {
+        try {
+            return driver.findElements(By.xpath("//div[@data-testid='property-card']")).size() > 0;
+        } catch (Exception e) {
+            log.error("Failed to verify search results: " + e.getMessage(), e);
+            return false;
+        }
+    }
 }

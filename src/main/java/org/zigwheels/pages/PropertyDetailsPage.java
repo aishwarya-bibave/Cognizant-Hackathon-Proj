@@ -110,6 +110,27 @@ public class PropertyDetailsPage {
             log.info("Per Night: ₹" + perNight);
             driver.close();
             driver.switchTo().window(mainWindow);
+            
+            
+            
         }
     }
+
+    public boolean arePropertiesDisplayed() {
+        return holidayHomes != null && !holidayHomes.isEmpty();
+    }
+
+    public boolean doPropertiesContainCity(String nairobi) {
+        if (holidayHomes == null || holidayHomes.isEmpty()) {
+            return false;
+        }
+        for (WebElement home : holidayHomes) {
+            String locationText = home.getText();
+            if (locationText.toLowerCase().contains(nairobi.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
