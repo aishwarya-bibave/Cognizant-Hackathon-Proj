@@ -7,3 +7,4 @@ public class TC_13_TotalPriceValidationTest {
     public void verifyTotalPriceIsExtractedAndParsedCorrectly() {
 
     }
+}
