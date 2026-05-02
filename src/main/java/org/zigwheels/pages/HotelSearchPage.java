@@ -4,8 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
-import java.util.List;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -43,6 +41,21 @@ public class HotelSearchPage {
 
     @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
     WebElement checkWonderfulOption;
+
+    @FindBy(name="review_score=90")
+    WebElement checkboxForWonderfulFilter;
+
+    @FindBy(name="ht_id=220")
+    WebElement checkboxForVacationHomesFilter;
+
+    @FindBy(name="ht_id=204")
+    WebElement checkboxForHotelsFilter;
+
+    @FindBy(xpath="//span[@class='cd46a6a263']//span[text()='Elevator']")
+    WebElement elevatorSelection;
+
+    @FindBy(xpath="//div[text()='We couldn’t find any matching filters']")
+    WebElement noMatchingFilter;
 
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
@@ -90,11 +103,11 @@ public class HotelSearchPage {
         }
     }
 
-    public void inputElevatorInSmartFilters(){
+    public void enterSmartFilter(String filterName){
         js.executeScript("arguments[0].scrollIntoView();",scrollToSmartFilters);
         try{
             WaitUtils.waitForElementToBeVisible(checkWonderfulOption);
-            smartFilterTextArea.sendKeys("Elevator");
+            smartFilterTextArea.sendKeys(filterName);
             WaitUtils.waitForElementToBeClickable(findPropertiesBtn);
             try{
                 findPropertiesBtn.click();
@@ -107,21 +120,28 @@ public class HotelSearchPage {
         }
     }
 
-    public boolean isVacationHomesFilterApplied() {
-        try {
-            // Wait until results update with "Vacation Homes"
-            List<WebElement> results = driver.findElements(By.xpath("//div[@data-testid='property-card']"));
-            for (WebElement result : results) {
-                String text = result.getText().toLowerCase();
-                if (text.contains("vacation home") || text.contains("holiday home")) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (Exception e) {
-            log.error("Failed to verify Vacation Homes filter: " + e.getMessage(), e);
-            return false;
-        }
-
+    public boolean isWonderfulFilterApplied(){
+        return checkboxForWonderfulFilter.isSelected();
     }
+
+    public boolean isVacationHomesFilterApplied(){
+        return checkboxForVacationHomesFilter.isSelected();
+    }
+
+    public boolean isHotelsFilterApplied(){
+        return checkboxForHotelsFilter.isSelected();
+    }
+
+    public boolean isElevatorFilterApplied(){
+        return elevatorSelection.isDisplayed();
+    }
+
+    public boolean isSmartFilterApplied(){
+        return !noMatchingFilter.isDisplayed();
+    }
+
+    public boolean checkPropertiesPageUrl(){
+        return driver.getCurrentUrl().contains("searchresults");
+    }
+
 }
