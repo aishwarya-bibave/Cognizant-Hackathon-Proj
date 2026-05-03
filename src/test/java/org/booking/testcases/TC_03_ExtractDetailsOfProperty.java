@@ -21,5 +21,7 @@ public class TC_03_ExtractDetailsOfProperty extends BaseTest {
         hsp.clickHotelsOption();
         hsp.clickWonderfulOption();
         hsp.inputElevatorInSmartFilters();
+        PropertyDetailsPage pdp = new PropertyDetailsPage(driver);
+        pdp.extractHolidayHomeDetails();
     }
 }
