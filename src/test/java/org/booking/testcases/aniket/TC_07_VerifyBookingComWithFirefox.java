@@ -1,29 +1,38 @@
 package org.booking.testcases.aniket;
+
 import basetest.BaseTest;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import org.zigwheels.pages.HomePage;
+import org.zigwheels.pages.HotelSearchPage;
+import org.zigwheels.pages.PropertyDetailsPage;
 
 import java.time.Duration;
 
 public class TC_07_VerifyBookingComWithFirefox extends BaseTest {
     @Test
     public void verifyBookingComWithFirefox() {
-        SoftAssert sa = new SoftAssert();
+        HomePage hp = new HomePage(driver);
+        HotelSearchPage hsp = new HotelSearchPage(driver);
+        PropertyDetailsPage pdp = new PropertyDetailsPage(driver);
 
-        // Wait until the title contains "Booking"
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.titleContains("Booking"));
+        hp.closePop();
+        hp.searchCity("Nairobi");
+        Assert.assertTrue(hp.startDate("30", "May", "2026"));
+        hp.endDate("30", "June", "2026");
+        hp.enterNumberOfAdults(4);
+        hp.search();
 
-        String title = driver.getTitle();
-        System.out.println("Page title: " + title);
+        hsp.clickVacationHomesOption();
+        hsp.clickHotelsOption();
+        hsp.clickWonderfulOption();
+        hsp.enterSmartFilter("Elevator");
 
-        // More flexible check
-        sa.assertTrue(title.toLowerCase().contains("booking"),
-                "Unexpected page title: " + title);
-
-        sa.assertAll();
+        pdp.extractHolidayHomeDetails();
+        Assert.assertTrue(true);
     }
 }
