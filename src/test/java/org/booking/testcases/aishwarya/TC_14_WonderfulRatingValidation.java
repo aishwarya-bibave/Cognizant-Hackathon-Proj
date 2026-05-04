@@ -4,8 +4,8 @@ import basetest.BaseTest;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import org.zigwheels.pages.HomePage;
-import org.zigwheels.pages.HotelSearchPage;
+import org.booking.pages.HomePage;
+import org.booking.pages.HotelSearchPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

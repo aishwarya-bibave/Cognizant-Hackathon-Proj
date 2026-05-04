@@ -4,7 +4,7 @@ import basetest.BaseTest;
 import org.testng.Assert;
 import utilities.DateUtils;
 import org.testng.annotations.Test;
-import org.zigwheels.pages.HomePage;
+import org.booking.pages.HomePage;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import org.apache.logging.log4j.LogManager;
