@@ -1,11 +1,8 @@
 package org.booking.pages;
-
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.Log;
 import utilities.WaitUtils;
 
 import java.util.ArrayList;
@@ -15,9 +12,6 @@ import java.util.Set;
 public class PropertyDetailsPage {
     WebDriver driver;
     JavascriptExecutor js;
-    private static final Logger log =
-            LogManager.getLogger(PropertyDetailsPage.class);
-
     public PropertyDetailsPage(WebDriver driver){
         this.driver = driver;
         this.js = (JavascriptExecutor) driver;
@@ -55,7 +49,7 @@ public class PropertyDetailsPage {
                 try{
                     WaitUtils.waitForElementToBeVisible(holidayHome);
                 }catch(Exception e){
-                    log.error("Failed because holiday home is not visible : " + e.getMessage(), e);
+                    Log.error("Failed because holiday home is not visible : " + e.getMessage(), e);
                 }
                 WebElement seeAvailabilityBtn = seeAvailability.get(index);
                 js.executeScript("arguments[0].scrollIntoView()", holidayHome);
@@ -66,10 +60,10 @@ public class PropertyDetailsPage {
                         seeAvailabilityBtn.click();
                     }catch(ElementClickInterceptedException e1){
                         js.executeScript("arguments[0].click();", seeAvailabilityBtn);
-                        log.warn("Click intercepted, used JavaScript click for seeAvailability Button");
+                        Log.warn("Click intercepted, used JavaScript click for seeAvailability Button");
                     }
                 }catch(Exception e2){
-                    log.error("Failed either because of Holiday Home is not visible or availability button is not clicked : " + e2.getMessage(), e2);
+                    Log.error("Failed either because of Holiday Home is not visible or availability button is not clicked : " + e2.getMessage(), e2);
                 }
                 Set<String> windowHandles = driver.getWindowHandles();
                 String mainWindow = driver.getWindowHandle();
@@ -82,19 +76,19 @@ public class PropertyDetailsPage {
                 try {
                     WaitUtils.waitForElementToBePresent("//div[@data-capla-component-boundary='b-property-web-property-page/PropertyHeaderName']//h2");
                     WaitUtils.waitForElementToBeVisible(holidayHomeTitle);
-                    log.info("Holiday Home Title: " + holidayHomeTitle.getText());
+                    Log.info("Holiday Home Title: " + holidayHomeTitle.getText());
                 } catch (Exception e) {
-                    log.error("Holiday Home Title not visible: " + e.getMessage(), e);
+                    Log.error("Holiday Home Title not visible: " + e.getMessage(), e);
                 }
-                log.info("Holiday Home Location: " + holidayHomeLocation.getText());
+                Log.info("Holiday Home Location: " + holidayHomeLocation.getText());
                 js.executeScript("arguments[0].scrollIntoView();", containerOfTotalPrice);
                 try{
                     WaitUtils.waitForElementToBeVisible(containerOfTotalPrice);
                 }catch(Exception e2){
-                    log.error("Failed because element is not visible: " + e2.getMessage(), e2);
+                    Log.error("Failed because element is not visible: " + e2.getMessage(), e2);
                 }
                 String totalPriceForAllNightsIncluded = holidayHomePrice.getText();
-                log.info("Holiday Home Total Price (All Nights Included): " + totalPriceForAllNightsIncluded);
+                Log.info("Holiday Home Total Price (All Nights Included): " + totalPriceForAllNightsIncluded);
                 int totalPrice = Integer.parseInt(totalPriceForAllNightsIncluded.replaceAll("[^0-9]", ""));
                 String durationText = tripDurationAndMembers.getText().split(",")[0].trim();
                 int nights = 0;
@@ -111,13 +105,13 @@ public class PropertyDetailsPage {
                     nights = days - 1;
                 }
                 double perNight = (double) totalPrice / nights;
-                log.info("Duration: " + nights + " nights");
-                log.info("Per Night: ₹" + perNight);
+                Log.info("Duration: " + nights + " nights");
+                Log.info("Per Night: ₹" + perNight);
                 driver.close();
                 driver.switchTo().window(mainWindow);
             }
         }catch(Exception e){
-            log.error("No Holiday Homes Found");
+            Log.error("No Holiday Homes Found",e);
         }
     }
 
@@ -142,14 +136,14 @@ public class PropertyDetailsPage {
 
         for (WebElement priceElement : totalPriceElements) {
             String priceText = priceElement.getText();
-            log.info("Extracted price text: {}", priceText);
+            Log.info("Extracted price text: "+ priceText);
 
             String cleanedPrice = priceText.replaceAll("[^0-9]", "");
 
             try {
                 parsedPrices.add(Double.parseDouble(cleanedPrice));
             } catch (NumberFormatException e) {
-                log.error("Price parsing failed for: " + priceText, e);
+                Log.error("Price parsing failed for: " + priceText, e);
             }
         }
         return parsedPrices;
@@ -196,7 +190,7 @@ public class PropertyDetailsPage {
                     WaitUtils.waitForElementToBeVisible(holidayHomeLocationBy);
 
             String locationText = locationElement.getText().split("\n")[0].trim();
-            log.info(
+            Log.info(
                     "Holiday Home Location (index " + (index + 1) + "): " + locationText
             );
 
@@ -250,7 +244,7 @@ public class PropertyDetailsPage {
                     WaitUtils.waitForElementToBeVisible(totalPriceBy);
 
             String priceText = priceElement.getText().trim();
-            log.info("Holiday Home Price (index " + (index + 1) + "): " + priceText);
+            Log.info("Holiday Home Price (index " + (index + 1) + "): " + priceText);
 
             if (priceText.isEmpty()) {
                 driver.close();

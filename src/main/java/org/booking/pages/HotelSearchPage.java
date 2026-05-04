@@ -1,22 +1,17 @@
 package org.booking.pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.Log;
 import utilities.WaitUtils;
 
 import java.util.List;
 
 public class HotelSearchPage {
-
-    private static final Logger log =
-            LogManager.getLogger(HotelSearchPage.class);
-
     WebDriver driver;
     JavascriptExecutor js;
 
@@ -77,10 +72,10 @@ public class HotelSearchPage {
                 checkVacationOption.click();
             }catch(ElementClickInterceptedException e1){
                 js.executeScript("arguments[0].click();", checkVacationOption);
-                log.warn("Click intercepted, used JavaScript click for checkVacationOption");
+                Log.warn("Click intercepted, used JavaScript click for checkVacationOption");
             }
         }catch(Exception e2){
-            log.error("Failed to click Vacation Homes option: " + e2.getMessage(), e2);
+            Log.error("Failed to click Vacation Homes option: " + e2.getMessage(), e2);
         }
     }
 
@@ -91,10 +86,10 @@ public class HotelSearchPage {
                 checkHotelsOption.click();
             }catch(ElementClickInterceptedException e1){
                 js.executeScript("arguments[0].click();", checkHotelsOption);
-                log.warn("Click intercepted, used JavaScript click for checkHotelsOption");
+                Log.warn("Click intercepted, used JavaScript click for checkHotelsOption");
             }
         }catch(Exception e2){
-            log.error("Failed to click Hotels option: " + e2.getMessage(), e2);
+            Log.error("Failed to click Hotels option: " + e2.getMessage(), e2);
         }
     }
 
@@ -107,10 +102,10 @@ public class HotelSearchPage {
                 checkWonderfulOption.click();
             }catch(ElementClickInterceptedException e1){
                 js.executeScript("arguments[0].click();", checkWonderfulOption);
-                log.warn("Click intercepted, used JavaScript click for checkWonderfulOption");
+                Log.warn("Click intercepted, used JavaScript click for checkWonderfulOption");
             }
         }catch(Exception e2){
-            log.error("Failed to click Wonderful option: " + e2.getMessage(), e2);
+            Log.error("Failed to click Wonderful option: " + e2.getMessage(), e2);
         }
     }
 
@@ -124,10 +119,10 @@ public class HotelSearchPage {
                 findPropertiesBtn.click();
             }catch(ElementClickInterceptedException e1){
                 js.executeScript("arguments[0].click();", findPropertiesBtn);
-                log.warn("Click intercepted, used JavaScript click for findPropertiesBtn");
+                Log.warn("Click intercepted, used JavaScript click for findPropertiesBtn");
             }
         }catch(Exception e2){
-            log.error("Failed to input Elevator in Smart Filters: " + e2.getMessage(), e2);
+            Log.error("Failed to input Elevator in Smart Filters: " + e2.getMessage(), e2);
         }
     }
     public WebElement getElevatorLabel()
@@ -157,7 +152,7 @@ public class HotelSearchPage {
 
     public boolean isNoMatchingFilterMessageDisplayed() {
         try {
-            log.info(emptySmartFilter.getText());
+            Log.info(emptySmartFilter.getText());
             return emptySmartFilter.isDisplayed();
         } catch (Exception e) {
             return false;

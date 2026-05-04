@@ -9,5 +9,7 @@ public class Log {
     public static void info(String message){
         logger.info(message);
     }
+    public static void error(String message,Exception e){logger.error(message,e);}
+    public static void warn(String message){logger.warn(message);}
 }
 

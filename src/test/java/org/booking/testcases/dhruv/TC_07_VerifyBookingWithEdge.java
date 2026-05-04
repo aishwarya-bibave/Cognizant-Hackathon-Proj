@@ -8,11 +8,7 @@ import org.booking.pages.HotelSearchPage;
 import org.booking.pages.PropertyDetailsPage;
 
 public class TC_07_VerifyBookingWithEdge extends BaseTest {
-//    @BeforeMethod
-//    public void setup(){
-//        driver = new EdgeDriver();
-//        driver.manage().window().maximize();
-//    }
+
     @Test
     public void verifyBookingComWithEdge() {
 

@@ -1,57 +1,54 @@
 package org.booking.testcases.aniket;
-
 import basetest.BaseTest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import org.booking.pages.PropertyDetailsPage;
+import utilities.Log;
 
 public class TC_06_VerifyHolidayHomesResults extends BaseTest {
-    private static final Logger log = LogManager.getLogger(TC_06_VerifyHolidayHomesResults.class);
     @Test
     public void verifyHolidayHomesResults(){
         HomePage hp = new HomePage(driver);
         HotelSearchPage hsp = new HotelSearchPage(driver);
         PropertyDetailsPage bd = new PropertyDetailsPage(driver);
 
-        log.info("Starting test: Verify Holiday Homes results");
+        Log.info("Starting test: Verify Holiday Homes results");
 
         hp.closePop();
-        log.info("Closed popup successfully");
+        Log.info("Closed popup successfully");
 
         hp.searchCity("Nairobi");
-        log.info("Entered city: Nairobi");
+        Log.info("Entered city: Nairobi");
 
         boolean startDateSelected = hp.startDate("4", "May", "2026");
-        log.info("Start date selected: " + startDateSelected);
+        Log.info("Start date selected: " + startDateSelected);
 
         hp.endDate("7", "May", "2026");
-        log.info("End date selected: 7 May 2026");
+        Log.info("End date selected: 7 May 2026");
 
         hp.enterNumberOfAdults(2);
-        log.info("Entered number of adults: 2");
+        Log.info("Entered number of adults: 2");
 
         hp.search();
-        log.info("Clicked search button");
+        Log.info("Clicked search button");
 
         hsp.clickVacationHomesOption();
-        log.info("Clicked Vacation Homes filter");
+        Log.info("Clicked Vacation Homes filter");
 
         SoftAssert sa = new SoftAssert();
         boolean propertiesDisplayed = bd.arePropertiesDisplayed();
-        log.info("Properties displayed: " + propertiesDisplayed);
+        Log.info("Properties displayed: " + propertiesDisplayed);
 
         sa.assertTrue(propertiesDisplayed, "No properties displayed");
 
         boolean propertiesContainCity = bd.doPropertiesContainCity("Nairobi");
-        log.info("Properties contain city Nairobi: " + propertiesContainCity);
+        Log.info("Properties contain city Nairobi: " + propertiesContainCity);
 
         sa.assertTrue(propertiesContainCity, "Holiday homes in Nairobi are not displayed for given dates");
 
         sa.assertAll();
-        log.info("Soft assertions executed");
+        Log.info("Soft assertions executed");
     }
 }

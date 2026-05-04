@@ -1,18 +1,13 @@
 package org.booking.testcases.aniket;
-
 import basetest.BaseTest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import org.booking.pages.PropertyDetailsPage;
+import utilities.Log;
 
 public class TC_07_VerifyBookingComWithFirefox extends BaseTest {
-
-    private static final Logger log = LogManager.getLogger(TC_07_VerifyBookingComWithFirefox.class);
 
     @Test
     public void verifyBookingComWithFirefox() {
@@ -20,42 +15,42 @@ public class TC_07_VerifyBookingComWithFirefox extends BaseTest {
         HotelSearchPage hsp = new HotelSearchPage(driver);
         PropertyDetailsPage pdp = new PropertyDetailsPage(driver);
 
-        log.info("Starting test: Verify Booking.com search flow with Firefox driver");
+        Log.info("Starting test: Verify Booking.com search flow with Firefox driver");
 
         hp.closePop();
-        log.info("Closed popup successfully");
+        Log.info("Closed popup successfully");
 
         hp.searchCity("Nairobi");
-        log.info("Entered city: Nairobi");
+        Log.info("Entered city: Nairobi");
 
         boolean startDateSelected = hp.startDate("30", "May", "2026");
-        log.info("Start date selected: " + startDateSelected);
+        Log.info("Start date selected: " + startDateSelected);
 
         hp.endDate("30", "June", "2026");
-        log.info("End date selected: 30 June 2026");
+        Log.info("End date selected: 30 June 2026");
 
         hp.enterNumberOfAdults(4);
-        log.info("Entered number of adults: 4");
+        Log.info("Entered number of adults: 4");
 
         hp.search();
-        log.info("Clicked search button");
+        Log.info("Clicked search button");
 
         hsp.clickVacationHomesOption();
-        log.info("Clicked Vacation Homes filter");
+        Log.info("Clicked Vacation Homes filter");
 
         hsp.clickHotelsOption();
-        log.info("Clicked Hotels filter");
+        Log.info("Clicked Hotels filter");
 
         hsp.clickWonderfulOption();
-        log.info("Clicked Wonderful filter");
+        Log.info("Clicked Wonderful filter");
 
         hsp.enterSmartFilter("Elevator");
-        log.info("Entered Elevator in Smart Filters");
+        Log.info("Entered Elevator in Smart Filters");
 
         pdp.extractHolidayHomeDetails();
-        log.info("Extracted holiday home details");
+        Log.info("Extracted holiday home details");
 
         Assert.assertTrue(true, "Firefox navigation and search flow failed");
-        log.info("Assertion completed: Booking.com search flow verified with Firefox");
+        Log.info("Assertion completed: Booking.com search flow verified with Firefox");
     }
 }

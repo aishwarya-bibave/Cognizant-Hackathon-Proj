@@ -1,12 +1,9 @@
 package org.booking.pages;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utilities.Log;
 import utilities.WaitUtils;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -15,8 +12,6 @@ import java.util.List;
 public class HomePage {
     WebDriver driver;
     JavascriptExecutor js;
-    private static final Logger log = LogManager.getLogger(HomePage.class);
-
     public HomePage(WebDriver driver){
         this.driver = driver;
         this.js = (JavascriptExecutor) driver;
@@ -70,10 +65,10 @@ public class HomePage {
                 closePopupBtn.click();
             }catch(ElementClickInterceptedException e1){
                 js.executeScript("arguments[0].click()", closePopupBtn);
-                log.warn("Click intercepted, used JavaScript click for closePopupBtn");
+                Log.warn("Click intercepted, used JavaScript click for closePopupBtn");
             }
         }catch(Exception e2){
-            log.error("Failed to close popup: " + e2.getMessage(), e2);
+            Log.error("Failed to close popup: " + e2.getMessage(), e2);
         }
     }
     public void searchCity(String enterCity){
@@ -84,7 +79,7 @@ public class HomePage {
                 driver.findElement(By.xpath("//div[text()='"+enterCity+"']")).click();
             }
         }catch(Exception e){
-            log.error("Failed to enter city: " + e.getMessage(), e);
+            Log.error("Failed to enter city: " + e.getMessage(), e);
         }
     }
 
@@ -108,7 +103,7 @@ public class HomePage {
                 nextMonthBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", nextMonthBtn);
-                log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
+                Log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
             }
         }
         driver.findElement(By.xpath("(//span[text()='"+startDay+"'])[1]")).click();
@@ -127,7 +122,7 @@ public class HomePage {
                 nextMonthBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", nextMonthBtn);
-                log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
+                Log.warn("Click intercepted, used JavaScript click for nextMonthBtn");
             }
         }
         driver.findElement(By.xpath("(//span[text()='"+endDay+"'])[1]")).click();
@@ -143,10 +138,10 @@ public class HomePage {
                     guestSelector.click();
                 }catch(ElementClickInterceptedException e2){
                     js.executeScript("arguments[0].click()", guestSelector);
-                    log.warn("Click intercepted, used JavaScript click for guestSelector");
+                    Log.warn("Click intercepted, used JavaScript click for guestSelector");
                 }
             }catch(Exception e1){
-                log.error("Failed to open guest selector: " + e1.getMessage(), e1);
+                Log.error("Failed to open guest selector: " + e1.getMessage(), e1);
             }
             int currentAdultsSelected = Integer.parseInt(checkAdultCount.getText());
             while(currentAdultsSelected < targetAdults){
@@ -154,7 +149,7 @@ public class HomePage {
                     adultPlusBtn.click();
                 }catch(ElementClickInterceptedException e){
                     js.executeScript("arguments[0].click()", adultPlusBtn);
-                    log.warn("Click intercepted, used JavaScript click for adultPlusBtn");
+                    Log.warn("Click intercepted, used JavaScript click for adultPlusBtn");
                 }
                 currentAdultsSelected = Integer.parseInt(checkAdultCount.getText());
             }
@@ -163,7 +158,7 @@ public class HomePage {
                     adultMinusBtn.click();
                 }catch(ElementClickInterceptedException e){
                     js.executeScript("arguments[0].click()", adultMinusBtn);
-                    log.warn("Click intercepted, used JavaScript click for adultMinusBtn");
+                    Log.warn("Click intercepted, used JavaScript click for adultMinusBtn");
                 }
                 currentAdultsSelected = Integer.parseInt(checkAdultCount.getText());
             }
@@ -171,7 +166,7 @@ public class HomePage {
                 applyBtn.click();
             }catch(ElementClickInterceptedException e){
                 js.executeScript("arguments[0].click()", applyBtn);
-                log.warn("Click intercepted, used JavaScript click for applyBtn");
+                Log.warn("Click intercepted, used JavaScript click for applyBtn");
             }
             return true;
         }
@@ -184,10 +179,10 @@ public class HomePage {
                 searchBtn.click();
             }catch(ElementClickInterceptedException e1){
                 js.executeScript("arguments[0].click()", searchBtn);
-                log.warn("Click intercepted, used JavaScript click for searchBtn");
+                Log.warn("Click intercepted, used JavaScript click for searchBtn");
             }
         }catch(Exception e2){
-            log.error("Failed to click search button: " + e2.getMessage(), e2);
+            Log.error("Failed to click search button: " + e2.getMessage(), e2);
         }
     }
 
@@ -202,7 +197,7 @@ public class HomePage {
             return actualCity.contains(city);
         }
         catch (Exception e) {
-            log.error("Failed to verify entered city: " + e.getMessage(), e);
+            Log.error("Failed to verify entered city: " + e.getMessage(), e);
             return false;
         }
     }
@@ -211,7 +206,7 @@ public class HomePage {
         try {
             return !propertyCards.isEmpty();
         } catch (Exception e) {
-            log.error("Failed to verify search results: " + e.getMessage(), e);
+            Log.error("Failed to verify search results: " + e.getMessage(), e);
             return false;
         }
     }
