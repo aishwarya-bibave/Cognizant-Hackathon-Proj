@@ -43,6 +43,20 @@ public class HotelSearchPage {
     WebElement checkWonderfulOption;
 
 
+    @FindBy(name="review_score=90")
+    WebElement checkboxForWonderfulFilter;
+
+    @FindBy(name="ht_id=220")
+    WebElement checkboxForVacationHomesFilter;
+
+    @FindBy(name="ht_id=204")
+    WebElement checkboxForHotelsFilter;
+
+    @FindBy(xpath="//span[@class='cd46a6a263']//span[text()='Elevator']")
+    WebElement elevatorSelection;
+
+    @FindBy(xpath="//div[text()='We couldn’t find any matching filters']")
+    WebElement noMatchingFilter;
 
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();", checkVacationOption);
@@ -90,11 +104,11 @@ public class HotelSearchPage {
         }
     }
 
-    public void inputElevatorInSmartFilters() {
-        js.executeScript("arguments[0].scrollIntoView();", scrollToSmartFilters);
-        try {
+    public void enterSmartFilter(String filterName){
+        js.executeScript("arguments[0].scrollIntoView();",scrollToSmartFilters);
+        try{
             WaitUtils.waitForElementToBeVisible(checkWonderfulOption);
-            smartFilterTextArea.sendKeys("Elevator");
+            smartFilterTextArea.sendKeys(filterName);
             WaitUtils.waitForElementToBeClickable(findPropertiesBtn);
             try {
                 findPropertiesBtn.click();
@@ -110,6 +124,28 @@ public class HotelSearchPage {
     public String getSmartFilterText(){
         String value = smartFilterTextArea.getAttribute("value");
         return value;
+    public boolean isWonderfulFilterApplied(){
+        return checkboxForWonderfulFilter.isSelected();
+    }
+
+    public boolean isVacationHomesFilterApplied(){
+        return checkboxForVacationHomesFilter.isSelected();
+    }
+
+    public boolean isHotelsFilterApplied(){
+        return checkboxForHotelsFilter.isSelected();
+    }
+
+    public boolean isElevatorFilterApplied(){
+        return elevatorSelection.isDisplayed();
+    }
+
+    public boolean isSmartFilterApplied(){
+        return !noMatchingFilter.isDisplayed();
+    }
+
+    public boolean checkPropertiesPageUrl(){
+        return driver.getCurrentUrl().contains("searchresults");
     }
 
 }
