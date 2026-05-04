@@ -39,7 +39,7 @@ public class HotelSearchPage {
     WebElement findPropertiesBtn;
 
     @FindBy(xpath="//div[contains(text(),'Hotels') and @data-testid='filters-group-label-content']")
-    WebElement checkHotelsOption;
+    public WebElement checkHotelsOption;
 
     @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
     WebElement checkWonderfulOption;
