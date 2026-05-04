@@ -1,4 +1,4 @@
-package org.booking.testcases.ranu;
+package org.booking.testcases;
 // Test Case: Invalid Input in Smart Filters
 import basetest.BaseTest;
 import org.testng.Assert;

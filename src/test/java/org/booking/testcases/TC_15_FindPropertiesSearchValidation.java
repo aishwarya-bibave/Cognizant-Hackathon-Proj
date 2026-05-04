@@ -1,19 +1,17 @@
-package org.booking.testcases.aishwarya;
+package org.booking.testcases;
 import basetest.BaseTest;
-import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import utilities.Log;
 
-public class TC_14_WonderfulRatingValidation extends BaseTest {
-
+public class TC_15_FindPropertiesSearchValidation extends BaseTest {
 
     @Test
-    public void verifyWonderfulFilterShowsOnlyWonderfulHotels() {
+    public void verifyFindPropertiesTriggersSearchResults() {
 
-        Log.info("Test started: Verify Wonderful rating filter");
+        Log.info("Test started: Verify Find Properties triggers search results");
 
         HomePage hp = new HomePage(driver);
 
@@ -32,7 +30,7 @@ public class TC_14_WonderfulRatingValidation extends BaseTest {
         Log.info("Entering number of adults: 4");
         hp.enterNumberOfAdults(4);
 
-        Log.info("Clicking search button");
+        Log.info("Clicking search (Find Properties)");
         hp.search();
 
         HotelSearchPage hsp = new HotelSearchPage(driver);
@@ -46,23 +44,19 @@ public class TC_14_WonderfulRatingValidation extends BaseTest {
         Log.info("Applying Wonderful rating filter");
         hsp.clickWonderfulOption();
 
-        SoftAssert softAssert = new SoftAssert();
+        Log.info("Entering smart filter: Elevator");
+        hsp.enterSmartFilter("Elevator");
 
-        Log.info("Validating review labels shown on search results");
+        String actualText = hsp.getElevatorLabel().getText();
+        Log.info("Captured smart filter label text: "+ actualText);
 
-        for (WebElement label : hsp.getReviewLabels()) {
-            String text = label.getText();
-            Log.info("Review label found: "+ text);
+        Assert.assertEquals(
+                actualText,
+                "Elevator",
+                "Elevator filter failed to apply"
+        );
 
-            softAssert.assertTrue(
-                    text.contains("Wonderful") || text.contains("Exceptional"),
-                    "FAIL: Other review filter displayed -> " + text
-            );
-        }
-
-        softAssert.assertAll();
-
-        Log.info("All review labels validated successfully");
+        Log.info("Validation successful: Elevator filter applied correctly");
         Log.info("Test completed");
     }
 }

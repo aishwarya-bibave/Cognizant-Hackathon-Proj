@@ -1,4 +1,4 @@
-package org.booking.testcases.ranu;
+package org.booking.testcases;
 // Test Case: Verify navigation of driver happening properly or not.
 import basetest.BaseTest;
 import org.testng.Assert;

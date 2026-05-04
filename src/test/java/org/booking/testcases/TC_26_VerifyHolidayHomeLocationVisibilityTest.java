@@ -1,4 +1,4 @@
-package org.booking.testcases.soumik;
+package org.booking.testcases;
 
 
 import basetest.BaseTest;
@@ -8,7 +8,7 @@ import org.booking.pages.HomePage;
 import org.booking.pages.PropertyDetailsPage;
 import utilities.Log;
 
-public class TC_03_VerifyHolidayHomeLocationVisibilityTest extends BaseTest {
+public class TC_26_VerifyHolidayHomeLocationVisibilityTest extends BaseTest {
 
     @Test
     public void verifyHolidayHomeLocationForFirstFiveHomes() {

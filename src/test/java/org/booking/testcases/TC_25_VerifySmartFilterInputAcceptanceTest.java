@@ -1,4 +1,4 @@
-package org.booking.testcases.soumik;
+package org.booking.testcases;
 
 import basetest.BaseTest;
 import org.testng.Assert;
@@ -7,7 +7,7 @@ import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import utilities.Log;
 
-public class TC_02_VerifySmartFilterInputAcceptanceTest extends BaseTest {
+public class TC_25_VerifySmartFilterInputAcceptanceTest extends BaseTest {
     @Test
     public void run(){
         HomePage hp = new HomePage(driver);

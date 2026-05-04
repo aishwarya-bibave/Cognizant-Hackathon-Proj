@@ -1,19 +1,20 @@
-package org.booking.testcases.aniket;
+package org.booking.testcases;
 import basetest.BaseTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
+import org.booking.pages.PropertyDetailsPage;
 import utilities.Log;
 
-public class TC_05_VerifyVacationHomesOptionSelected extends BaseTest {
-
+public class TC_06_VerifyHolidayHomesResults extends BaseTest {
     @Test
-    public void verifyVacationHomesFilter() {
+    public void verifyHolidayHomesResults(){
         HomePage hp = new HomePage(driver);
         HotelSearchPage hsp = new HotelSearchPage(driver);
+        PropertyDetailsPage bd = new PropertyDetailsPage(driver);
 
-        Log.info("Starting test: Verify Vacation Homes option selected");
+        Log.info("Starting test: Verify Holiday Homes results");
 
         hp.closePop();
         Log.info("Closed popup successfully");
@@ -37,12 +38,15 @@ public class TC_05_VerifyVacationHomesOptionSelected extends BaseTest {
         Log.info("Clicked Vacation Homes filter");
 
         SoftAssert sa = new SoftAssert();
-        boolean vacationHomesApplied = hsp.isVacationHomesFilterApplied();
+        boolean propertiesDisplayed = bd.arePropertiesDisplayed();
+        Log.info("Properties displayed: " + propertiesDisplayed);
 
-        Log.info("Vacation Homes filter applied: " + vacationHomesApplied);
+        sa.assertTrue(propertiesDisplayed, "No properties displayed");
 
-        sa.assertTrue(vacationHomesApplied, "Vacation Homes option is not selected");
-        Log.info("Assertion completed: Vacation Homes filter validation");
+        boolean propertiesContainCity = bd.doPropertiesContainCity("Nairobi");
+        Log.info("Properties contain city Nairobi: " + propertiesContainCity);
+
+        sa.assertTrue(propertiesContainCity, "Holiday homes in Nairobi are not displayed for given dates");
 
         sa.assertAll();
         Log.info("Soft assertions executed");

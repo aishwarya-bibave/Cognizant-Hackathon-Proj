@@ -1,4 +1,4 @@
-package org.booking.testcases.aishwarya;
+package org.booking.testcases;
 import basetest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -9,7 +9,7 @@ import utilities.Log;
 
 import java.util.List;
 
-public class TC_13_TotalPriceValidationTest extends BaseTest {
+public class TC_18_TotalPriceValidationTest extends BaseTest {
 
     @Test
     public void verifyTotalPriceIsExtractedAndParsedCorrectly() {

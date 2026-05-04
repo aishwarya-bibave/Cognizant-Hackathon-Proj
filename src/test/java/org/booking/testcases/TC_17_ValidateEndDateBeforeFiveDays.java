@@ -1,4 +1,4 @@
-package org.booking.testcases.aishwarya;
+package org.booking.testcases;
 import basetest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -8,7 +8,7 @@ import utilities.Log;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class TC_12_ValidateEndDateBeforeFiveDays extends BaseTest {
+public class TC_17_ValidateEndDateBeforeFiveDays extends BaseTest {
 
     @Test
     public void validateEndDateGreaterThanFiveDays() {

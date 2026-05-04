@@ -1,4 +1,4 @@
-package org.booking.testcases.dhruv;
+package org.booking.testcases;
 
 import basetest.BaseTest;
 import org.testng.Assert;
@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
 
-public class TC_06_DaysMorethan90 extends BaseTest {
+public class TC_22_DaysMorethan90 extends BaseTest {
     @Test
     public void validateSearchButton(){
         HomePage hp = new HomePage(driver);
