@@ -1,21 +1,20 @@
-package org.booking.testcases.aniket;
+package org.booking.testcases;
+// Test case: Verify All filters are applied or not
 import basetest.BaseTest;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
-import org.booking.pages.PropertyDetailsPage;
 import utilities.Log;
 
-public class TC_07_VerifyBookingComWithFirefox extends BaseTest {
+public class TC_02_VerifyAllFiltersApplied extends BaseTest {
 
     @Test
-    public void verifyBookingComWithFirefox() {
+    public void verifyFiltersApplied(){
         HomePage hp = new HomePage(driver);
         HotelSearchPage hsp = new HotelSearchPage(driver);
-        PropertyDetailsPage pdp = new PropertyDetailsPage(driver);
 
-        Log.info("Starting test: Verify Booking.com search flow with Firefox driver");
+        Log.info("Starting test: Verify all filters applied");
 
         hp.closePop();
         Log.info("Closed popup successfully");
@@ -23,11 +22,11 @@ public class TC_07_VerifyBookingComWithFirefox extends BaseTest {
         hp.searchCity("Nairobi");
         Log.info("Entered city: Nairobi");
 
-        boolean startDateSelected = hp.startDate("30", "May", "2026");
+        boolean startDateSelected = hp.startDate("4", "May", "2026");
         Log.info("Start date selected: " + startDateSelected);
 
-        hp.endDate("30", "June", "2026");
-        Log.info("End date selected: 30 June 2026");
+        hp.endDate("7", "May", "2026");
+        Log.info("End date selected: 7 May 2026");
 
         hp.enterNumberOfAdults(4);
         Log.info("Entered number of adults: 4");
@@ -47,10 +46,13 @@ public class TC_07_VerifyBookingComWithFirefox extends BaseTest {
         hsp.enterSmartFilter("Elevator");
         Log.info("Entered Elevator in Smart Filters");
 
-        pdp.extractHolidayHomeDetails();
-        Log.info("Extracted holiday home details");
+        SoftAssert sa = new SoftAssert();
+        sa.assertTrue(hsp.isWonderfulFilterApplied(), "Wonderful filter is not applied");
+        sa.assertTrue(hsp.isVacationHomesFilterApplied(), "Vacation Homes filter is not applied");
+        sa.assertTrue(hsp.isHotelsFilterApplied(), "Hotels filter is not applied");
+        sa.assertTrue(hsp.isElevatorFilterApplied(), "Elevator filter is not applied");
+        sa.assertAll();
 
-        Assert.assertTrue(true, "Firefox navigation and search flow failed");
-        Log.info("Assertion completed: Booking.com search flow verified with Firefox");
+        Log.info("All filter assertions completed");
     }
 }

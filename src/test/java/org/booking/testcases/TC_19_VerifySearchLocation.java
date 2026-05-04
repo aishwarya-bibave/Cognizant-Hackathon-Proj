@@ -1,4 +1,4 @@
-package org.booking.testcases.aniket;
+package org.booking.testcases;
 
 import basetest.BaseTest;
 import org.testng.annotations.Test;
@@ -6,7 +6,7 @@ import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
 import utilities.Log;
 
-public class TC_03_VerifySearchLocation extends BaseTest {
+public class TC_19_VerifySearchLocation extends BaseTest {
 
     @Test
     public void verifyValidSearchLocation(){

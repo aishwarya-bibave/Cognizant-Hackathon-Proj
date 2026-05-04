@@ -1,4 +1,4 @@
-package org.booking.testcases.ranu;
+package org.booking.testcases;
 import basetest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;

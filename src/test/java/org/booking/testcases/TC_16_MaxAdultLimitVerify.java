@@ -1,15 +1,13 @@
-package org.booking.testcases.aishwarya;
+package org.booking.testcases;
 
 import basetest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.booking.pages.HomePage;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import utilities.Log;
 
-public class TC_11_MaxAdultLimitVerify extends BaseTest {
+public class TC_16_MaxAdultLimitVerify extends BaseTest {
 
     @Test
     public void verifyMaxAdultLimit() {

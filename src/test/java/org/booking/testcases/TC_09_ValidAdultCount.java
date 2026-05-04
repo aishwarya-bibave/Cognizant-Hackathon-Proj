@@ -1,4 +1,4 @@
-package org.booking.testcases.sasikanta;
+package org.booking.testcases;
 import basetest.BaseTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;

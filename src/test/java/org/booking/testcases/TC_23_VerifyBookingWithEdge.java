@@ -1,4 +1,4 @@
-package org.booking.testcases.dhruv;
+package org.booking.testcases;
 
 import basetest.BaseTest;
 import org.testng.Assert;
@@ -7,7 +7,7 @@ import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import org.booking.pages.PropertyDetailsPage;
 
-public class TC_07_VerifyBookingWithEdge extends BaseTest {
+public class TC_23_VerifyBookingWithEdge extends BaseTest {
 
     @Test
     public void verifyBookingComWithEdge() {
