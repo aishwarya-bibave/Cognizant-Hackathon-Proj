@@ -54,6 +54,11 @@ public class HomePage {
     @FindBy(xpath="//span[text()='Search']")
     WebElement searchBtn;
 
+
+    @FindBy(xpath = "//div[contains(text(),'destination')]")
+    WebElement destinationTooltip;
+
+
     public void closePop(){
         try{
             WaitUtils.waitForElementToBeClickable(closePopupBtn);
@@ -224,5 +229,9 @@ public class HomePage {
         }catch(Exception e2){
             log.error("Failed to click search button: " + e2.getMessage(), e2);
         }
+    }
+    public String getDestinationTooltipText() {
+        WaitUtils.waitForElementToBeVisible(destinationTooltip);
+        return destinationTooltip.getText();
     }
 }
