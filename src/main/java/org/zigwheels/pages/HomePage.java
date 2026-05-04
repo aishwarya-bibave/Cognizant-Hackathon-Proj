@@ -52,6 +52,10 @@ public class HomePage {
     @FindBy(xpath="//span[text()='Search']")
     WebElement searchBtn;
 
+
+    @FindBy(xpath = "//div[contains(text(),'destination')]")
+    WebElement destinationTooltip;
+
     @FindBy(xpath="//div[@data-testid='property-card']")
     List<WebElement> propertyCards;
 
@@ -185,6 +189,10 @@ public class HomePage {
         }catch(Exception e2){
             log.error("Failed to click search button: " + e2.getMessage(), e2);
         }
+    }
+    public String getDestinationTooltipText() {
+        WaitUtils.waitForElementToBeVisible(destinationTooltip);
+        return destinationTooltip.getText();
     }
 
     public boolean isCityEnteredCorrectly(String city) {
