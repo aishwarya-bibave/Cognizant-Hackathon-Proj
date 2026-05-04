@@ -5,9 +5,6 @@
     <test name="Test">
         <classes>
 <!--            <class name="org.zigwheels.tests.TC_1GetURL"/>-->
-                <class name="org.booking.testcases.Tc_01"/>
-                <class name="org.booking.testcases.TC_02"/>
-                <class name="org.booking.testcases.TC_03"/>
         </classes>
     </test>
 </suite>
