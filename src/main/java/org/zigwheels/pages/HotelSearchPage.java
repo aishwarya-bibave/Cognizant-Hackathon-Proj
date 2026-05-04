@@ -37,7 +37,7 @@ public class HotelSearchPage {
     WebElement findPropertiesBtn;
 
     @FindBy(xpath="//div[contains(text(),'Hotels') and @data-testid='filters-group-label-content']")
-    public WebElement checkHotelsOption;
+    WebElement checkHotelsOption;
 
     @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
     WebElement checkWonderfulOption;
@@ -56,9 +56,6 @@ public class HotelSearchPage {
 
     @FindBy(xpath="//div[text()='We couldn’t find any matching filters']")
     WebElement noMatchingFilter;
-
-    @FindBy(xpath = "//div[@id=':r1l:-note']")
-    WebElement emptySmartFilter;
 
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
@@ -122,6 +119,7 @@ public class HotelSearchPage {
             log.error("Failed to input Elevator in Smart Filters: " + e2.getMessage(), e2);
         }
     }
+
     public boolean isWonderfulFilterApplied(){
         return checkboxForWonderfulFilter.isSelected();
     }
@@ -142,15 +140,8 @@ public class HotelSearchPage {
         return !noMatchingFilter.isDisplayed();
     }
 
-    public boolean isNoMatchingFilterMessageDisplayed() {
-            try {
-                log.info(emptySmartFilter.getText());
-                return emptySmartFilter.isDisplayed();
-            } catch (Exception e) {
-                return false;
-            }
-    }
     public boolean checkPropertiesPageUrl(){
         return driver.getCurrentUrl().contains("searchresults");
     }
+
 }
