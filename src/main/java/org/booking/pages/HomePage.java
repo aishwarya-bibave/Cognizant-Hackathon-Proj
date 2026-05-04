@@ -9,6 +9,7 @@ import utilities.WaitUtils;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class HomePage {
@@ -217,6 +218,12 @@ public class HomePage {
 
     public boolean showSearchCityValidationMsg(){
         return searchCityValidationMsg.isDisplayed();
+    }
+
+    public  LocalDate convertToDate(String day, String month, String year) {
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("dd-MMMM-yyyy");
+        return LocalDate.parse(day + "-" + month + "-" + year, formatter);
     }
 
 }
