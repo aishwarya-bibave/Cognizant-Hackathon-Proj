@@ -39,7 +39,7 @@ public class HotelSearchPage {
     WebElement findPropertiesBtn;
 
     @FindBy(xpath="//div[contains(text(),'Hotels') and @data-testid='filters-group-label-content']")
-    WebElement checkHotelsOption;
+    public WebElement checkHotelsOption;
 
     @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
     WebElement checkWonderfulOption;
@@ -64,6 +64,9 @@ public class HotelSearchPage {
 
     @FindBy(xpath = "//div[@class='f63b14ab7a f546354b44 becbee2f63']")
     List <WebElement> reviewLabels;
+
+    @FindBy(xpath = "//div[@id=':r1l:-note']")
+    WebElement emptySmartFilter;
 
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
@@ -131,6 +134,7 @@ public class HotelSearchPage {
     {
         return   elevator;
     }
+
     public boolean isWonderfulFilterApplied(){
         return checkboxForWonderfulFilter.isSelected();
     }
@@ -151,6 +155,14 @@ public class HotelSearchPage {
         return !noMatchingFilter.isDisplayed();
     }
 
+    public boolean isNoMatchingFilterMessageDisplayed() {
+        try {
+            log.info(emptySmartFilter.getText());
+            return emptySmartFilter.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public boolean checkPropertiesPageUrl(){
         return driver.getCurrentUrl().contains("searchresults");
     }
