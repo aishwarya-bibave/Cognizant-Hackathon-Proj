@@ -2,7 +2,6 @@ package org.booking.testcases.aishwarya;
 
 import basetest.BaseTest;
 import org.testng.Assert;
-import utilities.DateUtils;
 import org.testng.annotations.Test;
 import org.booking.pages.HomePage;
 import java.time.LocalDate;
@@ -35,8 +34,8 @@ public class TC_12_ValidateEndDateBeforeFiveDays extends BaseTest {
         hp.endDate("9", "May", "2026");
 
         logger.info("Converting start and end dates to LocalDate");
-        LocalDate startDate = DateUtils.convertToDate("01", "May", "2026");
-        LocalDate endDate   = DateUtils.convertToDate("05", "May", "2026");
+        LocalDate startDate = hp.convertToDate("01", "May", "2026");
+        LocalDate endDate   = hp.convertToDate("05", "May", "2026");
 
         logger.info("Start Date: {}", startDate);
         logger.info("End Date: {}", endDate);
