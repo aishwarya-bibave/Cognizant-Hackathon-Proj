@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import utilities.Log;
 import utilities.WaitUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HotelSearchPage {
@@ -21,6 +22,11 @@ public class HotelSearchPage {
         PageFactory.initElements(driver, this);
     }
 
+    @FindBy(xpath = "//span[@data-testid='price-and-discounted-price']")
+    List <WebElement> prices;
+
+    @FindBy(xpath = "//div[@class='ebc566407a']")
+    List <WebElement> ratingElements;
     @FindBy(xpath="//div[contains(text(),'Vacation Homes') and @data-testid='filters-group-label-content']")
     WebElement checkVacationOption;
 
@@ -62,6 +68,15 @@ public class HotelSearchPage {
 
     @FindBy(xpath = "//div[@id=':r1l:-note']")
     WebElement emptySmartFilter;
+
+    @FindBy(xpath = "//span[normalize-space()='Sort by:']")
+    WebElement sortButton;
+
+    @FindBy(xpath = "//span[normalize-space()='Property rating (high to low)']")
+    WebElement topReviewedProperties;
+
+    @FindBy(xpath = "//span[normalize-space()='Price (lowest first)']")
+    WebElement cheapestPrices;
 
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
@@ -169,5 +184,24 @@ public class HotelSearchPage {
     public String getSmartFilterText(){
         String value = smartFilterTextArea.getAttribute("value");
         return value;
+    }
+    public List<Integer> topReviewedProperties(){
+        sortButton.click();
+        topReviewedProperties.click();
+        List<Integer> rating = new ArrayList<>();
+
+        for (WebElement ratings : ratingElements) {
+            rating.add(Integer.parseInt(ratings.getAttribute("aria-label").split(" ")[0]));
+        }
+        return rating;
+    }
+    public List<Integer> cheapestProperties(){
+        sortButton.click();
+        cheapestPrices.click();
+        List <Integer> price = new ArrayList<>();
+        for (WebElement p : prices) {
+            price.add(Integer.parseInt(p.getText().split(" ")[1].replace(",","")));
+        }
+        return price;
     }
 }
