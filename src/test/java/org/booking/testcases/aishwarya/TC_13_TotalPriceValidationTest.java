@@ -4,8 +4,8 @@ import basetest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import org.zigwheels.pages.HomePage;
-import org.zigwheels.pages.PropertyDetailsPage;
+import org.booking.pages.HomePage;
+import org.booking.pages.PropertyDetailsPage;
 
 import java.util.List;
 
