@@ -24,42 +24,124 @@ public class HotelSearchPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//span[contains(text(),'Sort by')]")
-    WebElement sortByOption;
+    @FindBy(xpath="//div[contains(text(),'Vacation Homes') and @data-testid='filters-group-label-content']")
+    WebElement checkVacationOption;
 
-    @FindBy(xpath = "//span[text()='Top reviewed']")
-    WebElement topReviewOption;
+    @FindBy(xpath = "//div[@data-testid='filters-search-widget']")
+    WebElement scrollToSmartFilters;
 
-    public void clickOnSortByDropDown() {
-        try {
-            WaitUtils.waitForElementToBeClickable(sortByOption);
+    @FindBy(xpath ="//div[@data-testid='filters-search-widget']//form//div[@class='f6e3a11b0d ae5dbab14d e95943ce9b']//textarea")
+    WebElement smartFilterTextArea;
+
+    @FindBy(xpath = "//button[@class='de576f5064 b46cd7aad7 e26a59bb37 c7a901b0e7 f3e59d528f aaf9b6e287 e7f2b1a356 a9d40b8d51']")
+    WebElement findPropertiesBtn;
+
+    @FindBy(xpath="//div[contains(text(),'Hotels') and @data-testid='filters-group-label-content']")
+    WebElement checkHotelsOption;
+
+    @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
+    WebElement checkWonderfulOption;
+
+    @FindBy(name="review_score=90")
+    WebElement checkboxForWonderfulFilter;
+
+    @FindBy(name="ht_id=220")
+    WebElement checkboxForVacationHomesFilter;
+
+    @FindBy(name="ht_id=204")
+    WebElement checkboxForHotelsFilter;
+
+    @FindBy(xpath="//span[@class='cd46a6a263']//span[text()='Elevator']")
+    WebElement elevatorSelection;
+
+    @FindBy(xpath="//div[text()='We couldn’t find any matching filters']")
+    WebElement noMatchingFilter;
+
+    public void clickVacationHomesOption() {
+        js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
+        try{
+            WaitUtils.waitForElementToBeVisible(checkVacationOption);
+            WaitUtils.waitForElementToBeClickable(checkVacationOption);
             try{
-                sortByOption.click();
-                log.info("Clicked on Sort By option successfully");
+                checkVacationOption.click();
             }catch(ElementClickInterceptedException e1){
-                log.warn("Normal click failed for Sort By. Trying JavaScript click.", e1);
-                js.executeScript("arguments[0].click();", sortByOption);
-                log.info("Clicked on Sort By using JavaScript");
+                js.executeScript("arguments[0].click();", checkVacationOption);
+                log.warn("Click intercepted, used JavaScript click for checkVacationOption");
             }
-        } catch (Exception e2) {
-            log.error("Unable to click Sort By option", e2);
+        }catch(Exception e2){
+            log.error("Failed to click Vacation Homes option: " + e2.getMessage(), e2);
         }
     }
 
-    public void clickOnTopReviewsOption() {
-        try {
-            WaitUtils.waitForElementToBeVisible(topReviewOption);
-            WaitUtils.waitForElementToBeClickable(topReviewOption);
+    public void clickHotelsOption(){
+        try{
+            WaitUtils.waitForElementToBeClickable(checkHotelsOption);
             try{
-                topReviewOption.click();
-                log.info("Clicked on Top Review option successfully");
+                checkHotelsOption.click();
             }catch(ElementClickInterceptedException e1){
-                log.warn("Normal click failed for Top Review. Trying JavaScript click.", e1);
-                js.executeScript("arguments[0].click();", sortByOption);
-                log.info("Clicked on Sort By using JavaScript");
+                js.executeScript("arguments[0].click();", checkHotelsOption);
+                log.warn("Click intercepted, used JavaScript click for checkHotelsOption");
             }
-        } catch (Exception e2) {
-            log.error("Unable to click Top Review option", e2);
+        }catch(Exception e2){
+            log.error("Failed to click Hotels option: " + e2.getMessage(), e2);
         }
     }
+
+    public void clickWonderfulOption(){
+        js.executeScript("arguments[0].scrollIntoView();",checkWonderfulOption);
+        try{
+            WaitUtils.waitForElementToBeVisible(checkWonderfulOption);
+            WaitUtils.waitForElementToBeClickable(checkWonderfulOption);
+            try{
+                checkWonderfulOption.click();
+            }catch(ElementClickInterceptedException e1){
+                js.executeScript("arguments[0].click();", checkWonderfulOption);
+                log.warn("Click intercepted, used JavaScript click for checkWonderfulOption");
+            }
+        }catch(Exception e2){
+            log.error("Failed to click Wonderful option: " + e2.getMessage(), e2);
+        }
+    }
+
+    public void enterSmartFilter(String filterName){
+        js.executeScript("arguments[0].scrollIntoView();",scrollToSmartFilters);
+        try{
+            WaitUtils.waitForElementToBeVisible(checkWonderfulOption);
+            smartFilterTextArea.sendKeys(filterName);
+            WaitUtils.waitForElementToBeClickable(findPropertiesBtn);
+            try{
+                findPropertiesBtn.click();
+            }catch(ElementClickInterceptedException e1){
+                js.executeScript("arguments[0].click();", findPropertiesBtn);
+                log.warn("Click intercepted, used JavaScript click for findPropertiesBtn");
+            }
+        }catch(Exception e2){
+            log.error("Failed to input Elevator in Smart Filters: " + e2.getMessage(), e2);
+        }
+    }
+
+    public boolean isWonderfulFilterApplied(){
+        return checkboxForWonderfulFilter.isSelected();
+    }
+
+    public boolean isVacationHomesFilterApplied(){
+        return checkboxForVacationHomesFilter.isSelected();
+    }
+
+    public boolean isHotelsFilterApplied(){
+        return checkboxForHotelsFilter.isSelected();
+    }
+
+    public boolean isElevatorFilterApplied(){
+        return elevatorSelection.isDisplayed();
+    }
+
+    public boolean isSmartFilterApplied(){
+        return !noMatchingFilter.isDisplayed();
+    }
+
+    public boolean checkPropertiesPageUrl(){
+        return driver.getCurrentUrl().contains("searchresults");
+    }
+
 }
