@@ -1,0 +1,5 @@
+2026-05-04 15:14:00 INFO  Log:10 - Starting TC_08_InvalidDateTest
+2026-05-04 15:14:03 INFO  Log:10 - Popup closed successfully
+2026-05-04 15:14:04 INFO  Log:10 - City entered: Nairobi
+2026-05-04 15:14:04 INFO  Log:10 - Attempted to select past date: 3 April 2026
+2026-05-04 15:14:04 INFO  Log:10 -  Past date selection correctly blocked
