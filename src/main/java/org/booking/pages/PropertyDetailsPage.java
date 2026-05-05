@@ -4,7 +4,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Log;
 import utilities.WaitUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class PropertyDetailsPage {
     @FindBy(xpath="//div[@data-capla-component-boundary='b-property-web-property-page/PropertyHeaderName']//h2")
     WebElement holidayHomeTitle;
 
-    @FindBy(xpath="//div[@class='b99b6ef58f cb4b7a25d9 b06461926f']")
+    @FindBy(xpath="(//div[@data-testid='PropertyHeaderAddressDesktop-wrapper']//div//button//div)[1]")
     WebElement holidayHomeLocation;
 
     @FindBy(xpath="(//span[@class='prco-valign-middle-helper'])[1]")
@@ -131,6 +130,7 @@ public class PropertyDetailsPage {
         }
         return false;
     }
+
     public List<Double> getParsedTotalPrices() {
         List<Double> parsedPrices = new ArrayList<>();
 
@@ -150,88 +150,66 @@ public class PropertyDetailsPage {
     }
 
     public boolean verifyLocationDisplayedForFirstFiveHolidayHomes() {
-
         String mainWindow = driver.getWindowHandle();
-
         By holidayHomesBy =
                 By.xpath("//div[@data-testid='property-card']");
         By seeAvailabilityBy =
                 By.xpath("//a[@data-testid='availability-cta-btn']");
         By holidayHomeLocationBy =
                 By.xpath("//div[@class='b99b6ef58f cb4b7a25d9 b06461926f']");
-
         for (int index = 0; index < 5; index++) {
-
             List<WebElement> homes = driver.findElements(holidayHomesBy);
             List<WebElement> availabilityButtons = driver.findElements(seeAvailabilityBy);
-
             WebElement holidayHome = homes.get(index);
             WebElement seeAvailabilityBtn = availabilityButtons.get(index);
-
             WaitUtils.waitForElementToBeVisible(holidayHome);
             js.executeScript(
                     "arguments[0].scrollIntoView({block:'center'});",
                     holidayHome
             );
-
             WaitUtils.waitForElementToBeClickable(seeAvailabilityBtn);
             seeAvailabilityBtn.click();
-
-
             for (String handle : driver.getWindowHandles()) {
                 if (!handle.equals(mainWindow)) {
                     driver.switchTo().window(handle);
                     break;
                 }
             }
-
-
             WebElement locationElement =
                     WaitUtils.waitForElementToBeVisible(holidayHomeLocationBy);
-
             String locationText = locationElement.getText().split("\n")[0].trim();
             Log.info(
                     "Holiday Home Location (index " + (index + 1) + "): " + locationText
             );
-
             if (locationText.isEmpty()) {
                 driver.close();
                 driver.switchTo().window(mainWindow);
                 return false;
             }
-
             driver.close();
             driver.switchTo().window(mainWindow);
         }
-
         return true;
     }
+
     public boolean verifyPriceIsDisplayedForFirstFiveHomes() {
-
         String mainWindow = driver.getWindowHandle();
-
         By holidayHomesBy =
                 By.xpath("//div[@data-testid='property-card']");
         By seeAvailabilityBy =
                 By.xpath("//a[@data-testid='availability-cta-btn']");
         By totalPriceBy =
                 By.xpath("(//span[@class='prco-valign-middle-helper'])[1]");
-
         for (int index = 0; index < 5; index++) {
-
             // Re-locate elements to avoid stale issues
             List<WebElement> homes = driver.findElements(holidayHomesBy);
             List<WebElement> availabilityButtons = driver.findElements(seeAvailabilityBy);
-
             WebElement holidayHome = homes.get(index);
             WebElement seeAvailabilityBtn = availabilityButtons.get(index);
-
             WaitUtils.waitForElementToBeVisible(holidayHome);
             js.executeScript("arguments[0].scrollIntoView({block:'center'});", holidayHome);
-
             WaitUtils.waitForElementToBeClickable(seeAvailabilityBtn);
             seeAvailabilityBtn.click();
-
             // Switch to property details tab
             for (String handle : driver.getWindowHandles()) {
                 if (!handle.equals(mainWindow)) {
@@ -239,23 +217,18 @@ public class PropertyDetailsPage {
                     break;
                 }
             }
-
             WebElement priceElement =
                     WaitUtils.waitForElementToBeVisible(totalPriceBy);
-
             String priceText = priceElement.getText().trim();
             Log.info("Holiday Home Price (index " + (index + 1) + "): " + priceText);
-
             if (priceText.isEmpty()) {
                 driver.close();
                 driver.switchTo().window(mainWindow);
                 return false;
             }
-
             driver.close();
             driver.switchTo().window(mainWindow);
         }
-
         return true;
     }
 

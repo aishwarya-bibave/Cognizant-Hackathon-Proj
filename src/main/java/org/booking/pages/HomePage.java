@@ -18,7 +18,7 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath="//div[@class='e1e158e66b afdff78c97 ce103e449e fe169dc72b']")
+    @FindBy(xpath="//button[@aria-label='Dismiss sign-in info.']")
     WebElement closePopupBtn;
 
     @FindBy(xpath="//input[@placeholder='Where are you going?']")
@@ -33,13 +33,13 @@ public class HomePage {
     @FindBy(xpath="//button[@data-testid='occupancy-config']")
     WebElement guestSelector;
 
-    @FindBy(xpath="(//span[@class='e32aa465fd'])[1]")
+    @FindBy(xpath="(//div[@data-testid='occupancy-popup']//following-sibling::div)[1]//following-sibling::span")
     WebElement checkAdultCount;
 
     @FindBy(xpath="(//button[@tabindex = '-1'])[2]")
     WebElement adultPlusBtn;
 
-    @FindBy(xpath="(//div[@class='e301a14002']//button)[1]")
+    @FindBy(xpath="((//div[@data-testid='occupancy-popup']//following-sibling::div)[1]//child::button)[1]")
     WebElement adultMinusBtn;
 
     @FindBy(xpath="//span[normalize-space()='Done']")
@@ -48,14 +48,13 @@ public class HomePage {
     @FindBy(xpath="//span[text()='Search']")
     WebElement searchBtn;
 
-
     @FindBy(xpath = "//div[contains(text(),'destination')]")
     WebElement destinationTooltip;
 
     @FindBy(xpath="//div[@data-testid='property-card']")
     List<WebElement> propertyCards;
 
-    @FindBy(xpath="//div[@class='b9b405fa52']")
+    @FindBy(xpath="//div[@data-testid='searchbox-alert']//child::div")
     WebElement searchCityValidationMsg;
 
     public void closePop(){
@@ -220,5 +219,4 @@ public class HomePage {
                 DateTimeFormatter.ofPattern("dd-MMMM-yyyy");
         return LocalDate.parse(day + "-" + month + "-" + year, formatter);
     }
-
 }

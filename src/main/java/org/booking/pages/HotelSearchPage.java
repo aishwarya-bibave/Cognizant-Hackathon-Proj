@@ -25,18 +25,19 @@ public class HotelSearchPage {
     @FindBy(xpath = "//span[@data-testid='price-and-discounted-price']")
     List <WebElement> prices;
 
-    @FindBy(xpath = "//div[@class='ebc566407a']")
+    @FindBy(xpath = "//div[@data-testid=\"rating-stars\"]/parent::div")
     List <WebElement> ratingElements;
+
     @FindBy(xpath="//div[contains(text(),'Vacation Homes') and @data-testid='filters-group-label-content']")
     WebElement checkVacationOption;
 
     @FindBy(xpath = "//div[@data-testid='filters-search-widget']")
     WebElement scrollToSmartFilters;
 
-    @FindBy(xpath ="//div[@data-testid='filters-search-widget']//form//div[@class='f6e3a11b0d ae5dbab14d e95943ce9b']//textarea")
+    @FindBy(xpath ="//div[@data-testid='filters-search-widget']//form//following-sibling::div//textarea")
     WebElement smartFilterTextArea;
 
-    @FindBy(xpath = "//button[@class='de576f5064 b46cd7aad7 e26a59bb37 c7a901b0e7 f3e59d528f aaf9b6e287 e7f2b1a356 a9d40b8d51']")
+    @FindBy(xpath = "//div[@data-testid='filters-search-widget']//form//following-sibling::button")
     WebElement findPropertiesBtn;
 
     @FindBy(xpath="//div[contains(text(),'Hotels') and @data-testid='filters-group-label-content']")
@@ -45,16 +46,16 @@ public class HotelSearchPage {
     @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
     WebElement checkWonderfulOption;
 
-    @FindBy(name="review_score=90")
+    @FindBy(xpath="(//div[contains(@id, 'filter_group_review_score')]//div)[1]//input")
     WebElement checkboxForWonderfulFilter;
 
-    @FindBy(name="ht_id=220")
+    @FindBy(xpath="(//div[contains(@id, 'filter_group_ht')]//div)[21]//input")
     WebElement checkboxForVacationHomesFilter;
 
-    @FindBy(name="ht_id=204")
+    @FindBy(xpath="(//div[contains(@id, 'filter_group_ht')]//div)[1]//input")
     WebElement checkboxForHotelsFilter;
 
-    @FindBy(xpath="//span[@class='cd46a6a263']//span[text()='Elevator']")
+    @FindBy(xpath="//button[@aria-label='Elevator']//span[text()='Elevator']")
     WebElement elevatorSelection;
 
     @FindBy(xpath="//div[text()='We couldn’t find any matching filters']")
@@ -63,7 +64,7 @@ public class HotelSearchPage {
     @FindBy(xpath = "(//span[text()='Elevator'])[1]")
     WebElement elevator;
 
-    @FindBy(xpath = "//div[@class='f63b14ab7a f546354b44 becbee2f63']")
+    @FindBy(xpath = "//div[@data-testid='review-score']//following-sibling::div//div[1]")
     List <WebElement> reviewLabels;
 
     @FindBy(xpath = "//div[@id=':r1l:-note']")
@@ -78,10 +79,8 @@ public class HotelSearchPage {
     @FindBy(xpath = "//span[normalize-space()='Price (lowest first)']")
     WebElement cheapestPrices;
 
-
     @FindBy(xpath = "//span[contains(text(),'properties found')]")
     WebElement propertiesFoundText;
-
 
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
@@ -147,7 +146,7 @@ public class HotelSearchPage {
     }
     public WebElement getElevatorLabel()
     {
-        return   elevator;
+        return elevator;
     }
 
     public boolean isWonderfulFilterApplied(){
@@ -190,6 +189,7 @@ public class HotelSearchPage {
         String value = smartFilterTextArea.getAttribute("value");
         return value;
     }
+
     public List<Integer> topReviewedProperties(){
         sortButton.click();
         topReviewedProperties.click();
@@ -200,6 +200,7 @@ public class HotelSearchPage {
         }
         return rating;
     }
+
     public List<Integer> cheapestProperties(){
         sortButton.click();
         cheapestPrices.click();
@@ -220,5 +221,4 @@ public class HotelSearchPage {
                 .toLowerCase()
                 .contains("properties found");
     }
-
 }
