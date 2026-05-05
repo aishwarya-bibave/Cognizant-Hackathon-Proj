@@ -2,21 +2,25 @@ package org.booking.testcases;
 
 import basetest.BaseTest;
 import org.booking.pages.HomePage;
-import org.booking.pages.PropertyDetailsPage;
+import org.booking.pages.HotelSearchPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utilities.Log;
 
-public class TC_33_VerifyHolidayHomePriceVisibilityTest extends BaseTest {
+public class TC_30_VerifyPropertiesFoundTextIsDisplayed extends BaseTest {
 
     @Test
     public void run() {
 
-        Log.info("TEST STARTED : Verify Holiday Home Price Visibility");
+        Log.info("TEST STARTED : Verify Properties Found Text Visibility");
 
         // Initialize Home Page
         Log.info("Initializing Home Page");
         HomePage hp = new HomePage(driver);
+
+        // Initialize Search Results Page
+        Log.info("Initializing Hotel Search Page");
+        HotelSearchPage hsp = new HotelSearchPage(driver);
 
         // Close popup if present
         Log.info("Attempting to close pop-up if present");
@@ -38,22 +42,18 @@ public class TC_33_VerifyHolidayHomePriceVisibilityTest extends BaseTest {
         Log.info("Clicking Search button");
         hp.search();
 
-        // Initialize Property Details Page
-        Log.info("Initializing Property Details Page");
-        PropertyDetailsPage page = new PropertyDetailsPage(driver);
-
-        // Verify price visibility for first five holiday homes
-        Log.info("Verifying that price is displayed for the first five holiday homes");
-        boolean isPriceDisplayed =
-                page.verifyPriceIsDisplayedForFirstFiveHomes();
+        // Fetch and log results text
+        Log.info("Fetching 'properties found' text from search results");
+        String resultsText = hsp.getPropertiesFoundText();
+        Log.info("Search results text displayed: " + resultsText);
 
         // Assertion
         Assert.assertTrue(
-                isPriceDisplayed,
-                "Price is not displayed for one or more holiday homes"
+                hsp.isPropertiesFoundTextDisplayed(),
+                "Properties found text is not displayed"
         );
 
-        Log.info("Price is displayed for all first five holiday homes");
+        Log.info("Properties found text is displayed correctly");
         Log.info("TEST COMPLETED SUCCESSFULLY");
     }
 }

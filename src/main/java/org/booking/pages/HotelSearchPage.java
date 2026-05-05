@@ -78,6 +78,11 @@ public class HotelSearchPage {
     @FindBy(xpath = "//span[normalize-space()='Price (lowest first)']")
     WebElement cheapestPrices;
 
+
+    @FindBy(xpath = "//span[contains(text(),'properties found')]")
+    WebElement propertiesFoundText;
+
+
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
         try{
@@ -204,4 +209,16 @@ public class HotelSearchPage {
         }
         return price;
     }
+
+    public String getPropertiesFoundText() {
+        WaitUtils.waitForElementToBeVisible(propertiesFoundText);
+        return propertiesFoundText.getText().trim();
+    }
+
+    public boolean isPropertiesFoundTextDisplayed() {
+        return getPropertiesFoundText()
+                .toLowerCase()
+                .contains("properties found");
+    }
+
 }
