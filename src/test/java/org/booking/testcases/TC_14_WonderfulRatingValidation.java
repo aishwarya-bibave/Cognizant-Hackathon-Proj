@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TC_14_WonderfulRatingValidation extends BaseTest {
 
     @Test
-    public void verifyWonderfulFilterShowsOnlyWonderfulHotels() throws IOException {
+    public void verifyWonderfulFilterShowsOnlyWonderfulHotels() throws IOException, InterruptedException {
 
         Log.info("Test started: Verify Wonderful rating filter");
         HomePage hp = new HomePage(driver);
@@ -51,6 +51,7 @@ public class TC_14_WonderfulRatingValidation extends BaseTest {
 
         Log.info("Validating review labels shown on search results");
         for (WebElement label : hsp.getReviewLabels()) {
+            Thread.sleep(2000);
             String text = label.getText();
             Log.info("Review label found: "+ text);
             softAssert.assertTrue(

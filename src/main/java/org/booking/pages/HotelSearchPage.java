@@ -46,13 +46,13 @@ public class HotelSearchPage {
     @FindBy(xpath = "//div[contains(text(),'Wonderful') and @data-testid='filters-group-label-content']")
     WebElement checkWonderfulOption;
 
-    @FindBy(xpath="(//div[contains(@id, 'filter_group_review_score')]//div)[1]//input")
+    @FindBy(xpath="//div[@data-filters-group='review_score']//input[starts-with(@aria-label, 'Wonderful')]")
     WebElement checkboxForWonderfulFilter;
 
-    @FindBy(xpath="(//div[contains(@id, 'filter_group_ht')]//div)[21]//input")
+    @FindBy(xpath="//div[contains(@id, 'filter_group_ht_id_:r1d:')]//input[starts-with(@aria-label, 'Vacation Homes')]")
     WebElement checkboxForVacationHomesFilter;
 
-    @FindBy(xpath="(//div[contains(@id, 'filter_group_ht')]//div)[1]//input")
+    @FindBy(xpath="//div[contains(@id, 'filter_group_ht_id_:r1d:')]//input[starts-with(@aria-label, 'Hotels')]")
     WebElement checkboxForHotelsFilter;
 
     @FindBy(xpath="//button[@aria-label='Elevator']//span[text()='Elevator']")
@@ -88,6 +88,7 @@ public class HotelSearchPage {
     public void clickVacationHomesOption() {
         js.executeScript("arguments[0].scrollIntoView();",checkVacationOption);
         try{
+            WaitUtils.waitForElementToBePresent("//div[contains(text(),'Vacation Homes') and @data-testid='filters-group-label-content']");
             WaitUtils.waitForElementToBeVisible(checkVacationOption);
             WaitUtils.waitForElementToBeClickable(checkVacationOption);
             try{

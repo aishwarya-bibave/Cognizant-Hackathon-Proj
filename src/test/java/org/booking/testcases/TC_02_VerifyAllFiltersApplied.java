@@ -61,4 +61,3 @@ public class TC_02_VerifyAllFiltersApplied extends BaseTest {
         ScreenshotUtil.takeScreenshot(driver, "TC_02_VerifyAllFiltersApplied");
     }
 }
-
