@@ -4,20 +4,23 @@ import basetest.BaseTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.booking.pages.HomePage;
+import utilities.ExcelUtils;
 import utilities.Log;
 import utilities.ScreenshotUtil;
+
+import java.io.IOException;
 
 public class TC_19_VerifySearchLocation extends BaseTest {
 
     @Test
-    public void verifyValidSearchLocation(){
+    public void verifyValidSearchLocation() throws IOException {
         HomePage hp = new HomePage(driver);
         Log.info("Starting test: Verify valid search location");
 
         hp.closePop();
         Log.info("Closed popup successfully");
 
-        hp.searchCity("Nairobi");
+        hp.searchCity(ExcelUtils.getCellData(1, 0));
         Log.info("Entered city: Nairobi");
 
         SoftAssert sa = new SoftAssert();
