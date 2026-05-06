@@ -9,16 +9,18 @@ import org.testng.annotations.Test;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import org.booking.pages.PropertyDetailsPage;
+import utilities.ExcelUtils;
 import utilities.Log;
 import utilities.ScreenshotUtil;
 
+import java.io.IOException;
 import java.util.List;
 
 public class TC_29_HotelsSortedByLowPrice extends BaseTest {
 
 
     @Test
-    public void verifyHotelSortByLowPrice() throws InterruptedException {
+    public void verifyHotelSortByLowPrice() throws InterruptedException, IOException {
         HomePage hp = new HomePage(driver);
         HotelSearchPage hsp = new HotelSearchPage(driver);
         PropertyDetailsPage pdp = new PropertyDetailsPage(driver);
@@ -27,16 +29,16 @@ public class TC_29_HotelsSortedByLowPrice extends BaseTest {
         hp.closePop();
         Log.info("Closed popup successfully");
 
-        hp.searchCity("Nairobi");
+        hp.searchCity(ExcelUtils.getCellData(1, 0));
         Log.info("Entered city: Nairobi");
 
-        boolean startDateSelected = hp.startDate("30", "May", "2026");
+        boolean startDateSelected = hp.startDate(ExcelUtils.getCellData(1, 1), ExcelUtils.getCellData(1, 2), ExcelUtils.getCellData(1, 3));
         Log.info("Start date selected: " + startDateSelected);
 
-        hp.endDate("30", "June", "2026");
+        hp.endDate(ExcelUtils.getCellData(1, 4), ExcelUtils.getCellData(1, 5), ExcelUtils.getCellData(1, 6));
         Log.info("End date selected: 30 June 2026");
 
-        hp.enterNumberOfAdults(4);
+        hp.enterNumberOfAdults(Integer.parseInt(ExcelUtils.getCellData(1, 7)));
         Log.info("Entered number of adults: 4");
 
         hp.search();
@@ -48,7 +50,7 @@ public class TC_29_HotelsSortedByLowPrice extends BaseTest {
         hsp.clickHotelsOption();
         Log.info("Clicked Hotels filter");
 
-        hsp.enterSmartFilter("Elevator");
+        hsp.enterSmartFilter(ExcelUtils.getCellData(1, 8));
         Log.info("Entered Elevator in Smart Filters");
         Thread.sleep(7000);
 

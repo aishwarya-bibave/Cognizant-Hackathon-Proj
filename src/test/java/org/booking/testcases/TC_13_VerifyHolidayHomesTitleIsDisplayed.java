@@ -5,13 +5,16 @@ import org.testng.annotations.Test;
 import org.booking.pages.HomePage;
 import org.booking.pages.HotelSearchPage;
 import org.booking.pages.PropertyDetailsPage;
+import utilities.ExcelUtils;
 import utilities.Log;
 import utilities.ScreenshotUtil;
+
+import java.io.IOException;
 
 public class TC_13_VerifyHolidayHomesTitleIsDisplayed extends BaseTest {
 
     @Test
-    public void verifyHolidayHomeTitleDisplayed() {
+    public void verifyHolidayHomeTitleDisplayed() throws IOException {
         Log.info("===== TEST STARTED: Verify Holiday Home Title Is Displayed =====");
 
         HomePage hp = new HomePage(driver);
@@ -24,14 +27,14 @@ public class TC_13_VerifyHolidayHomesTitleIsDisplayed extends BaseTest {
         hp.closePop();
 
         Log.info("Entering city: Nairobi");
-        hp.searchCity("Nairobi");
+        hp.searchCity(ExcelUtils.getCellData(1, 0));
 
         Log.info("Selecting travel dates");
-        hp.startDate("30", "May", "2026");
-        hp.endDate("5", "June", "2026");
+        hp.startDate(ExcelUtils.getCellData(1, 1), ExcelUtils.getCellData(1, 2), ExcelUtils.getCellData(1, 3));
+        hp.endDate(ExcelUtils.getCellData(1, 4), ExcelUtils.getCellData(1, 5), ExcelUtils.getCellData(1, 6));
 
         Log.info("Selecting number of adults");
-        hp.enterNumberOfAdults(4);
+        hp.enterNumberOfAdults(Integer.parseInt(ExcelUtils.getCellData(1, 7)));
 
         Log.info("Clicking Search");
         hp.search();
@@ -42,7 +45,7 @@ public class TC_13_VerifyHolidayHomesTitleIsDisplayed extends BaseTest {
         hsp.clickWonderfulOption();
 
         Log.info("Entering Smart Filter: Elevator");
-        hsp.enterSmartFilter("Elevator");
+        hsp.enterSmartFilter(ExcelUtils.getCellData(1, 8));
         try {
             Log.info("Navigating to property details and extracting titles");
             pdp.extractHolidayHomeDetails();

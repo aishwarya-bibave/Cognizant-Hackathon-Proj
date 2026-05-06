@@ -3,16 +3,18 @@ import basetest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.booking.pages.HomePage;
+import utilities.ExcelUtils;
 import utilities.Log;
 import utilities.ScreenshotUtil;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class TC_17_ValidateEndDateBeforeFiveDays extends BaseTest {
 
     @Test
-    public void validateEndDateGreaterThanFiveDays() {
+    public void validateEndDateGreaterThanFiveDays() throws IOException {
         Log.info("Test started: Validate end date difference <= 5 days");
         HomePage hp = new HomePage(driver);
 
@@ -20,13 +22,13 @@ public class TC_17_ValidateEndDateBeforeFiveDays extends BaseTest {
         hp.closePop();
 
         Log.info("Searching city: Nairobi");
-        hp.searchCity("Nairobi");
+        hp.searchCity(ExcelUtils.getCellData(1, 0));
 
         Log.info("Selecting start date: 4 May 2026");
-        hp.startDate("4", "May", "2026");
+        hp.startDate(ExcelUtils.getCellData(1, 1), ExcelUtils.getCellData(1, 2), ExcelUtils.getCellData(1, 3));
 
         Log.info("Selecting end date: 9 May 2026");
-        hp.endDate("9", "May", "2026");
+        hp.endDate(ExcelUtils.getCellData(1, 4), ExcelUtils.getCellData(1, 5), ExcelUtils.getCellData(1, 6));
 
         Log.info("Converting start and end dates to LocalDate");
         LocalDate startDate = hp.convertToDate("01", "May", "2026");
