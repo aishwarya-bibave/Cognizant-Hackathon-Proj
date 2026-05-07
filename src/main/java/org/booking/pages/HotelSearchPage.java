@@ -49,7 +49,7 @@ public class HotelSearchPage {
     @FindBy(xpath="//div[@data-filters-group='review_score']//input[starts-with(@aria-label, 'Wonderful')]")
     WebElement checkboxForWonderfulFilter;
 
-    @FindBy(xpath="//div[contains(@id, 'filter_group_ht_id_:r1d:')]//input[starts-with(@aria-label, 'Vacation Homes')]")
+    @FindBy(xpath="//div[contains(@id, 'filter_group_ht_id_:r1d:')]//input[contains(@aria-label, 'Vacation Homes')]")
     WebElement checkboxForVacationHomesFilter;
 
     @FindBy(xpath="//div[contains(@id, 'filter_group_ht_id_:r1d:')]//input[starts-with(@aria-label, 'Hotels')]")
