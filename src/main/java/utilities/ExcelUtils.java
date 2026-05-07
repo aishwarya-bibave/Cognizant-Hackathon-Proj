@@ -13,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 public class ExcelUtils {
 
     private static final String XL_FILE = System.getProperty("user.dir") + "/src/test/resources/testData/BookingData.xlsx";
