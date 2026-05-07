@@ -27,10 +27,4 @@ public class WaitUtils {
     public static void waitForElementToBePresent(String locator) {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
     }
-
-    public static WebElement waitForElementToBeVisible(By locator) {
-        return wait.until(
-                ExpectedConditions.visibilityOfElementLocated(locator)
-        );
-    }
 }
