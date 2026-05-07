@@ -21,17 +21,17 @@ public class BaseTest {
     @BeforeClass
     public void setUp() throws Exception {
         if(PropertiesUtil.fetchPropertyValue("browser").equals("chrome")) {
-            driver = new ChromeDriver();
-//            ChromeOptions chromeOptions = new ChromeOptions();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            driver = new ChromeDriver(chromeOptions);
 //            chromeOptions.addArguments("--headless");
         }else if(PropertiesUtil.fetchPropertyValue("browser").equals("firefox")){
-            driver = new FirefoxDriver();
-//            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            driver = new FirefoxDriver(firefoxOptions);
 //            firefoxOptions.addArguments("--headless");
         }
         else if(PropertiesUtil.fetchPropertyValue("browser").equals("edge")){
-            driver = new EdgeDriver();
-//            EdgeOptions edgeOptions = new EdgeOptions();
+            EdgeOptions edgeOptions = new EdgeOptions();
+            driver = new EdgeDriver(edgeOptions);
 //            edgeOptions.addArguments("--headless");
         }
         driver.get(PropertiesUtil.fetchPropertyValue("baseUrl").toString());
